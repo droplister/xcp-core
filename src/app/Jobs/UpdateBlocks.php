@@ -100,17 +100,19 @@ class UpdateBlocks implements ShouldQueue
                 // Save messages
                 $this->saveMessages($block_data['_messages'], $block_data['block_time']);
             }
-
+        }
+        catch(Exception $e)
+        {
+            // API Error
+        }
+        finally
+        {
             // Keep going
             if($this->syncing)
             {
                 // Recurse
                 Artisan::call('update:blocks');
             }
-        }
-        catch(Exception $e)
-        {
-            // API Error
         }
     }
 
