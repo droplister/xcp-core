@@ -41,7 +41,7 @@ class XcpCoreServiceProvider extends ServiceProvider
     private function handleConfig()
     {
         $configPath = __DIR__ . '/config/xcp-core.php';
-        $this->publishes([$configPath => config_path('xcp-core.php')]);
+        $this->publishes([$configPath => config_path('xcp-core.php')], 'xcp-core');
     }
 
     /**
