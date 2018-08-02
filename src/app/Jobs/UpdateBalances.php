@@ -35,13 +35,21 @@ class UpdateBalances implements ShouldQueue
     protected $block;
 
     /**
+     * Rollback
+     *
+     * @var boolean
+     */
+    protected $rollback;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Block $block)
+    public function __construct(Block $block, $rollback=false)
     {
         $this->block = $block;
+        $this->rollback = $rollback;
     }
 
     /**
@@ -58,7 +66,7 @@ class UpdateBalances implements ShouldQueue
         foreach($unique_changes as $balance)
         {
             // Update balance
-            UpdateBalance::dispatch($balance['address'], $balance['asset'], $this->block);
+            UpdateBalance::dispatch($balance['address'], $balance['asset'], $this->block, $this->rollback);
         }
     }
 
@@ -102,8 +110,16 @@ class UpdateBalances implements ShouldQueue
      */
     private function getCredits()
     {
-        return Credit::where('block_index', '=', $this->block->block_index)
-            ->select('address', 'asset')
+        if($this->rollback)
+        {
+            $credits = Credit::where('block_index', '>', $this->block->block_index)
+        }
+        else
+        {
+            $credits = Credit::where('block_index', '=', $this->block->block_index)
+        }
+
+        return $credits->select('address', 'asset')
             ->groupBy('address', 'asset')
             ->get()
             ->toArray();
@@ -116,8 +132,16 @@ class UpdateBalances implements ShouldQueue
      */
     private function getDebits()
     {
-        return Debit::where('block_index', '=', $this->block->block_index)
-            ->select('address', 'asset')
+        if($this->rollback)
+        {
+            $debits = Debit::where('block_index', '>', $this->block->block_index)
+        }
+        else
+        {
+            $debits = Debit::where('block_index', '=', $this->block->block_index)
+        }
+
+        return $debits->select('address', 'asset')
             ->groupBy('address', 'asset')
             ->get()
             ->toArray();

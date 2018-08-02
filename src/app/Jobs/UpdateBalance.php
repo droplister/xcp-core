@@ -49,15 +49,23 @@ class UpdateBalance implements ShouldQueue
     protected $block;
 
     /**
+     * Rollback
+     *
+     * @var boolean
+     */
+    protected $rollback;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($address, $asset, Block $block)
+    public function __construct($address, $asset, Block $block, $rollback=false)
     {
         $this->address = $address;
         $this->asset = $asset;
         $this->block = $block;
+        $this->rollback = $rollback;
     }
 
     /**
@@ -70,8 +78,17 @@ class UpdateBalance implements ShouldQueue
         // Calculate quantity
         $quantity = $this->getQuantity();
 
-        // Update or create balance
-        $this->updateBalance($quantity);
+        // Use it based on state of application
+        if($this->rollback)
+        {
+            // Rollback a balance
+            $this->rollbackBalance($quantity);
+        }
+        else
+        {
+            // Update or create balance
+            $this->updateBalance($quantity);
+        }
     }
 
     /**
@@ -91,9 +108,17 @@ class UpdateBalance implements ShouldQueue
      */
     private function sumOfCredits()
     {
-        return Credit::where('address', '=', $this->address)
+        if($this->rollback)
+        {
+            $credits = Credit::where('block_index', '>', $this->block->block_index);
+        }
+        else
+        {
+            $credits = Credit::where('block_index', '<=', $this->block->block_index);
+        }
+
+        return $credits->where('address', '=', $this->address)
             ->where('asset', '=', $this->asset)
-            ->where('block_index', '<=', $this->block->block_index)
             ->sum('quantity');
     }
 
@@ -104,16 +129,24 @@ class UpdateBalance implements ShouldQueue
      */
     private function sumOfDebits()
     {
-        return Debit::where('address', '=', $this->address)
+        if($this->rollback)
+        {
+            $debits = Debit::where('block_index', '>', $this->block->block_index);
+        }
+        else
+        {
+            $debits = Debit::where('block_index', '<=', $this->block->block_index);
+        }
+
+        return $debits->where('address', '=', $this->address)
             ->where('asset', '=', $this->asset)
-            ->where('block_index', '<=', $this->block->block_index)
             ->sum('quantity');
     }
 
     /**
      * Update balance.
      *
-     * @return \Droplister\XcpCore\App\Balance
+     * @return integer
      */
     private function updateBalance($quantity)
     {
@@ -123,6 +156,22 @@ class UpdateBalance implements ShouldQueue
         ],[
             'quantity' => $quantity >= 0 ? $quantity : 0, // Sanity
             'confirmed_at' => $this->block->confirmed_at,
+        ]);
+    }
+
+    /**
+     * Rollback balance.
+     *
+     * @return integer
+     */
+    private function rollbackBalance($rollback)
+    {
+        $balance = Balance::where('address', '=', $this->address)
+            ->where('asset', '=', $this->asset)
+            ->first();
+
+        $balance->update([
+            'quantity' => $balance->quantity - $rollback
         ]);
     }
 }

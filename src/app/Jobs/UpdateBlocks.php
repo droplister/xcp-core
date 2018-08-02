@@ -350,6 +350,9 @@ class UpdateBlocks implements ShouldQueue
             // Clear jobs in the queue
             Redis::connection()->del('queues:default');
 
+            // Rollback balance first
+            UpdateBalances::dispatchNow($bindings['block_index'], true);
+
             // Rollback to block index
             $this->rollbackDatabase($rollback, $bindings['block_index']);
         }
@@ -410,7 +413,6 @@ class UpdateBlocks implements ShouldQueue
             'transactions',
             'addresses',
             'assets',
-            'balances'
             'bet_expirations',
             'bet_match_expirations',
             'bet_match_resolutions',
