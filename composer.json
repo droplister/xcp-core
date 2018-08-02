@@ -1,0 +1,36 @@
+{
+  "name": "droplister/xcp-core",
+  "description": "XCP data for Laravel Apps",
+  "homepage": "https://github.com/droplister/xcp-core",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dan Anderson",
+      "email": "me@dananderson.org"
+    }
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "fguillot/json-rpc": "@stable"
+  },
+  "autoload": {
+    "files": [
+      "src/utilities.php"
+    ],
+    "psr-4": {
+      "Droplister\\XcpCore\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Droplister\\XcpCore\\XcpCoreServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
+}
