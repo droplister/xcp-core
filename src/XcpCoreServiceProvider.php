@@ -49,7 +49,7 @@ class XcpCoreServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function handCommands()
+    private function handleCommands()
     {
         if($this->app->runningInConsole())
         {
