@@ -4,7 +4,7 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Carbon\Carbon;
 use JsonRPC\Client;
-use Artisan, DB, Exception, Redis;
+use Artisan, DB, Exception, Log, Redis;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Address;
 use Droplister\XcpCore\App\Message;
@@ -100,19 +100,19 @@ class UpdateBlocks implements ShouldQueue
                 // Save messages
                 $this->saveMessages($block_data['_messages'], $block_data['block_time']);
             }
+
+            Log::info('try ' .  (int) $this->syncing);
         }
         catch(Exception $e)
         {
             // API Error
+            Log::info('catch ' .  (int) $this->syncing);
         }
         finally
         {
             // Keep going
-            if($this->syncing)
-            {
-                // Recurse
-                Artisan::call('update:blocks');
-            }
+            if($this->syncing) Artisan::call('update:blocks');
+            Log::info('finally ' .  (int) $this->syncing);
         }
     }
 
