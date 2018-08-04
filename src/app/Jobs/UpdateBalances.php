@@ -112,11 +112,11 @@ class UpdateBalances implements ShouldQueue
     {
         if($this->rollback)
         {
-            $credits = Credit::where('block_index', '>', $this->block->block_index)
+            $credits = Credit::where('block_index', '>', $this->block->block_index);
         }
         else
         {
-            $credits = Credit::where('block_index', '=', $this->block->block_index)
+            $credits = Credit::where('block_index', '=', $this->block->block_index);
         }
 
         return $credits->select('address', 'asset')
@@ -134,11 +134,11 @@ class UpdateBalances implements ShouldQueue
     {
         if($this->rollback)
         {
-            $debits = Debit::where('block_index', '>', $this->block->block_index)
+            $debits = Debit::where('block_index', '>', $this->block->block_index);
         }
         else
         {
-            $debits = Debit::where('block_index', '=', $this->block->block_index)
+            $debits = Debit::where('block_index', '=', $this->block->block_index);
         }
 
         return $debits->select('address', 'asset')
