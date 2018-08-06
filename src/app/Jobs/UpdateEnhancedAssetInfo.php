@@ -4,6 +4,7 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Exception;
 use Droplister\XcpCore\App\Asset;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -97,7 +98,7 @@ class UpdateEnhancedAssetInfo implements ShouldQueue
         try
         {
             // Avoid getting caught loading
-            set_time_limit(5);
+            set_time_limit(10);
 
             // Context helps with edge cases
             return file_get_contents($url, false, stream_context_create($context));
@@ -123,7 +124,7 @@ class UpdateEnhancedAssetInfo implements ShouldQueue
                 'meta' => mb_convert_encoding($data, 'UTF-8', 'UTF-8')
             ]);
         }
-        catch (Exception $e)
+        catch (FatalErrorException | Exception $e)
         {
             // Not Valid
         }
