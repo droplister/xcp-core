@@ -166,12 +166,16 @@ class UpdateBalance implements ShouldQueue
      */
     private function rollbackBalance($rollback)
     {
-        $balance = Balance::where('address', '=', $this->address)
-            ->where('asset', '=', $this->asset)
-            ->first();
+        $balance = Balance::firstOrCreate([
+            'address' => $this->address,
+            'asset' => $this->asset,
+        ]);
+
+        $quantity = $balance->quantity - $rollback;
 
         $balance->update([
-            'quantity' => $balance->quantity - $rollback
+            'quantity' => $quantity >= 0 ? $quantity : 0, // Sanity
+            'confirmed_at' => $this->block->confirmed_at,
         ]);
     }
 }
