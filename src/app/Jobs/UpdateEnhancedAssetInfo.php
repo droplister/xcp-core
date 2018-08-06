@@ -4,7 +4,7 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Exception;
 use Droplister\XcpCore\App\Asset;
-use Symfony\Component\Debug\Exception\FatalErrorException;
+use Symfony\Component\Debug\Exception\FatalErrorException as FatalErrorException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
