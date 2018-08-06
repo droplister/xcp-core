@@ -41,4 +41,14 @@ class BetExpiration extends Model
     protected $dates = [
         'confirmed_at',
     ];
+
+    /**
+     * Bet
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bet()
+    {
+        return $this->belongsTo(Bet::class, 'bet_index', 'tx_index');
+    }
 }

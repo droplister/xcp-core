@@ -212,19 +212,20 @@ class Address extends Model
                 // Handle Multisig
                 if($address->type === 'multisig')
                 {
-                    static::handleMultisig($bindings[$address_column], $bindings);
+                    static::createMultisigAddresses($bindings[$address_column], $bindings);
                 }
             }
         }
     }
 
     /**
-     * Update Address Options
+     * Create Multisig Addresses
      *
      * @param  string  $multisig
+     * @param  array  $bindings
      * @return void
      */
-    public static function handleMultisig($multisig, $bindings)
+    public static function createMultisigAddresses($multisig, $bindings)
     {
         // Explode Multisig
         $addresses = explodeMultisig($multisig);

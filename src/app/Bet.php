@@ -117,4 +117,14 @@ class Bet extends Model
     {
         return fromSatoshi($this->counterwager_remaining);
     }
+
+    /**
+     * Bet Expiration
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function expiration()
+    {
+        return $this->hasOne(BetExpiration::class, 'tx_index', 'bet_index');
+    }
 }
