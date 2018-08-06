@@ -201,27 +201,38 @@ class Address extends Model
         ];
 
         // Haystack
-        foreach($address_columns as $address)
+        foreach($address_columns as $address_column)
         {
             // Needle in Haystack
-            if(isset($bindings[$address]))
+            if(isset($bindings[$address_column]))
             {
                 // Create Address
-                $address = static::firstOrCreateAddress($bindings[$address], $bindings);
+                $address = static::firstOrCreateAddress($bindings[$address_column], $bindings);
 
                 // Handle Multisig
                 if($address->type === 'multisig')
                 {
-                    // Explode Multisig
-                    $addresses = explodeMultisig($bindings[$address]);
-
-                    // Create Addresses
-                    foreach($addresses as $address)
-                    {
-                        static::firstOrCreateAddress($address, $bindings);
-                    }
+                    static::handleMultisig($bindings[$address_column], $bindings);
                 }
             }
+        }
+    }
+
+    /**
+     * Update Address Options
+     *
+     * @param  string  $multisig
+     * @return void
+     */
+    public static function handleMultisig($multisig, $bindings)
+    {
+        // Explode Multisig
+        $addresses = explodeMultisig($multisig);
+
+        // Create Addresses
+        foreach($addresses as $address)
+        {
+            static::firstOrCreateAddress($address, $bindings);
         }
     }
 
