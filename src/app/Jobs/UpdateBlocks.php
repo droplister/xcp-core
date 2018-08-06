@@ -229,8 +229,12 @@ class UpdateBlocks implements ShouldQueue
      */
     private function createEntry($message, $bindings)
     {
-        // Create transaction (if exists)
-        $this->createTransaction($message, $bindings);
+        // Messages exist without txs
+        if(isset($bindings['tx_index']))
+        {
+            // Create transaction (if exists)
+            $this->createTransaction($message, $bindings);
+        }
 
         // Create entry from this message (if valid)
         if($this->guardAgainstInvalidMessages($message, $bindings))
@@ -252,17 +256,13 @@ class UpdateBlocks implements ShouldQueue
      */
     private function createTransaction($message, $bindings)
     {
-        // Messages exist without txs
-        if(isset($bindings['tx_index']))
-        {
-            // Create transaction
-            $transaction = Transaction::firstOrCreateTransaction($message, $bindings);
+        // Create transaction
+        $transaction = Transaction::firstOrCreateTransaction($message, $bindings);
 
-            // Update transaction
-            if($this->guardAgainstInefficientSyncing($transaction))
-            {
-                UpdateTransaction::dispatch($transaction);
-            }
+        // Update transaction
+        if($this->guardAgainstInefficientSyncing($transaction))
+        {
+            UpdateTransaction::dispatch($transaction);
         }
     }
 
