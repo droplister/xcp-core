@@ -348,8 +348,11 @@ class UpdateBlocks implements ShouldQueue
             // Clear jobs in the queue
             Redis::connection()->del('queues:default');
 
+            // UpdateBalances requires Block instance
+            $block = Block::find($bindings['block_index']);
+
             // Rollback balance first
-            UpdateBalances::dispatchNow($bindings['block_index'], true);
+            UpdateBalances::dispatchNow($block, true);
 
             // Rollback to block index
             $this->rollbackDatabase($rollback, $bindings['block_index']);
