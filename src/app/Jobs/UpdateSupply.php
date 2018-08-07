@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
+use Throwable;
 use JsonRPC\Client;
 use Droplister\XcpCore\App\Asset;
 use Illuminate\Bus\Queueable;
@@ -67,7 +68,7 @@ class UpdateSupply implements ShouldQueue
             // Update issuance
             $this->asset->update(['issuance' => $supply]);
         }
-        catch(\Exception $e)
+        catch(Throwable $e)
         {
             // API Error
         }

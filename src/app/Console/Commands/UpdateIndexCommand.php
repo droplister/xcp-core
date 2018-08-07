@@ -3,7 +3,7 @@
 namespace Droplister\XcpCore\App\Console\Commands;
 
 use JsonRPC\Client;
-use Cache, Exception;
+use Cache, Throwable;
 use Illuminate\Console\Command;
 
 class UpdateIndexCommand extends Command
@@ -69,7 +69,7 @@ class UpdateIndexCommand extends Command
                 $this->call('update:blocks');
             }
         }
-        catch(Exception $e)
+        catch(Throwable $e)
         {
             // API Error
         }

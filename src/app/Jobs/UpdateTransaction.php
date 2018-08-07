@@ -2,7 +2,7 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
-use Exception;
+use Throwable;
 use JsonRPC\Client;
 use Droplister\XcpCore\App\Transaction;
 use Illuminate\Bus\Queueable;
@@ -78,7 +78,7 @@ class UpdateTransaction implements ShouldQueue
                 }
             }
         }
-        catch(Exception $e)
+        catch(Throwable $e)
         {
             // API Error
         }
