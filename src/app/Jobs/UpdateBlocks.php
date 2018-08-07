@@ -95,10 +95,13 @@ class UpdateBlocks implements ShouldQueue
             foreach($blocks as $block_data)
             {
                 // Process block
-                $this->processBlock($block_data);
+                $block = $this->processBlock($block_data);
 
                 // Save messages
                 $this->saveMessages($block_data['_messages'], $block_data['block_time']);
+
+                // Update balances
+                UpdateBalances::dispatch($block);
             }
         }
         catch(Throwable $e)
@@ -146,7 +149,7 @@ class UpdateBlocks implements ShouldQueue
             UpdateBlock::dispatch($block);
         }
 
-        UpdateBalances::dispatch($block);
+        return $block;
     }
 
     /**
