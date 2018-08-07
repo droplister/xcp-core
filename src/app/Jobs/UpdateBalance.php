@@ -75,6 +75,9 @@ class UpdateBalance implements ShouldQueue
      */
     public function handle()
     {
+        // Catch edge case
+        if($this->address === null) return false;
+
         // Calculate quantity
         $quantity = $this->getQuantity();
 
