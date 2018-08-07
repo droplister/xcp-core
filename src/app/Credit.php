@@ -46,7 +46,7 @@ class Credit extends Model
      */
     public function getQuantityNormalizedAttribute()
     {
-        if($this->asset === null) return $this->quantity; // Edge Case
+        if(! $this->assetModel) return $this->quantity; // Edge Case
 
         return normalizeQuantity($this->quantity, $this->assetModel->divisible);
     }
