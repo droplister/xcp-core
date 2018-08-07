@@ -146,11 +146,7 @@ class UpdateBlocks implements ShouldQueue
             UpdateBlock::dispatch($block);
         }
 
-        // Update balances
-        if(! $this->syncing)
-        {
-            UpdateBalances::dispatch($block);
-        }
+        UpdateBalances::dispatch($block);
     }
 
     /**

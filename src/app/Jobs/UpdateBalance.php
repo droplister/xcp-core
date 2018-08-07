@@ -170,15 +170,11 @@ class UpdateBalance implements ShouldQueue
             ->where('asset', '=', $this->asset)
             ->first();
 
-        // If rollback happens during  sync no balances will exist
-        if($balance)
-        {
-            $quantity = $balance->quantity - $rollback;
+        $quantity = $balance->quantity - $rollback;
 
-            $balance->update([
-                'quantity' => $quantity >= 0 ? $quantity : 0, // Sanity
-                'confirmed_at' => $this->block->confirmed_at,
-            ]);
-        }
+        $balance->update([
+            'quantity' => $quantity >= 0 ? $quantity : 0, // Sanity
+            'confirmed_at' => $this->block->confirmed_at,
+        ]);
     }
 }
