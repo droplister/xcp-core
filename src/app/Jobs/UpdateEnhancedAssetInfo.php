@@ -96,9 +96,6 @@ class UpdateEnhancedAssetInfo implements ShouldQueue
 
         try
         {
-            // Avoid getting caught loading
-            set_time_limit(10);
-
             // Context helps with edge cases
             return file_get_contents($url, false, stream_context_create($context));
         }
