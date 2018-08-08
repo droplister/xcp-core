@@ -22,5 +22,5 @@ return [
     /**
      * Sync Size (Maximum = 250)
      */
-    'sync_size' => env('XCP_CORE_SYNC_SIZE', 10),
+    'sync_size' => env('XCP_CORE_SYNC_SIZE', 1),
 ];

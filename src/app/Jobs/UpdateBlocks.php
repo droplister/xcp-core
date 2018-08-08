@@ -190,10 +190,6 @@ class UpdateBlocks implements ShouldQueue
         {
             $this->executeCommand($message, $bindings);
         }
-        else
-        {
-            \Log::info(serialize($message));
-        }
     }
 
     /**
