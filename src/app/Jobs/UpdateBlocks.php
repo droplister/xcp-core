@@ -453,7 +453,7 @@ class UpdateBlocks implements ShouldQueue
     private function getBindings($message, $block_time)
     {
         // Message's binded values
-        $bindings = get_object_vars(json_decode($message['bindings']));
+        $bindings = json_decode($message['bindings'], true);
 
         // Block's confirmation time
         $confirmed_at = Carbon::createFromTimestamp($block_time)->toDateTimeString();
