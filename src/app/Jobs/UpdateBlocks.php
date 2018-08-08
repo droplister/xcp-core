@@ -166,9 +166,23 @@ class UpdateBlocks implements ShouldQueue
             return $message1['command'] <=> $message2['command'];
         });
 
+        if($messages[0]['block_index'] === 350363)
+        {
+            \Log::info(count($messages));
+        }
+
+        if(isset($messages[1]) && $messages[1]['message_index'] === 730032)
+        {
+            \Log::info('saveMessages');
+        }
+
         // Each message
         foreach($messages as $message)
         {
+            if($message['message_index'] === 730032)
+            {
+                \Log::info('saveMessages loop');
+            }
             $this->saveMessage($message, $block_time);
         }
     }
@@ -185,9 +199,18 @@ class UpdateBlocks implements ShouldQueue
         // Get bindings
         $bindings = $this->getBindings($message, $block_time);
 
+        if($message['message_index'] === 730032)
+        {
+            \Log::info('saveMessage');
+        }
+
         // Save message
         if(Message::firstOrCreateMessage($message, $bindings))
         {
+            if($message['message_index'] === 730032)
+            {
+                \Log::info('saveMessage created');
+            }
             $this->executeCommand($message, $bindings);
         }
     }
