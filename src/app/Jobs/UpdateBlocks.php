@@ -101,7 +101,10 @@ class UpdateBlocks implements ShouldQueue
                 $this->saveMessages($block_data['_messages'], $block_data['block_time']);
 
                 // Update balances
-                UpdateBalances::dispatch($block)->delay(now()->addMinutes(1));
+                if(! $this->syncing)
+                {
+                    UpdateBalances::dispatch($block);
+                }
             }
         }
         catch(Throwable $e)
