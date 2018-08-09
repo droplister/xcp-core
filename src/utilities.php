@@ -91,7 +91,7 @@ function explodeMultisig($multisig)
  */
 function lengthFilter($value)
 {
-    return strlen($item) > 1;
+    return strlen($value) > 1;
 }
 
 /**
