@@ -44,11 +44,11 @@ class Mempool extends Model
      * @var array
      */
     protected $fillable = [
-         'tx_hash',
-         'category',
-         'command',
-         'bindings',
-         'timestamp',
+        'tx_hash',
+        'category',
+        'command',
+        'bindings',
+        'timestamp',
     ];
 
     /**

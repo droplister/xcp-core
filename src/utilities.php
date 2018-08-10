@@ -46,15 +46,15 @@ function getAddressType($address)
     {
         return 'multisig';
     }
-    elseif($address[0] === '1')
+    elseif($address[0] === '1' || $address[0] === 'm' || $address[0] === 'n')
     {
         return 'p2pkh';
     }
-    elseif($address[0] === '3')
+    elseif($address[0] === '3' || $address[0] === '2')
     {
         return 'p2sh';
     }
-    elseif($address[0] === 'b')
+    elseif($address[0] === 'bc1' || $address[0] === 'tb1')
     {
         return 'bech32';
     }
