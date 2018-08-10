@@ -6,7 +6,7 @@ use Droplister\XcpCore\App\Events\NonceWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contract extends Model
+class Nonce extends Model
 {
     /**
      * Primary Key
