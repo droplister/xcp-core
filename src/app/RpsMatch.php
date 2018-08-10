@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\RpsMatchWasCreated;
+use Droplister\XcpCore\App\Events\RpsMatchWasUpdated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class RpsMatch extends Model
@@ -19,6 +22,16 @@ class RpsMatch extends Model
      * @var boolean
      */
     public $incrementing = false;
+    
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => RpsMatchWasCreated::class,
+        'updated' => RpsMatchWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

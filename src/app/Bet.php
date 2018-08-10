@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\BetWasCreated;
+use Droplister\XcpCore\App\Events\BetWasUpdated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Bet extends Model
@@ -19,6 +22,16 @@ class Bet extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => BetWasCreated::class,
+        'updated' => BetWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

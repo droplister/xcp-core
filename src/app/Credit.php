@@ -2,10 +2,21 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\CreditWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Credit extends Model
 {
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => CreditWasCreated::class,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

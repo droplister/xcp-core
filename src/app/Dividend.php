@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\DividendWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Dividend extends Model
@@ -19,6 +21,15 @@ class Dividend extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => DividendWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\RpsExpirationWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class RpsExpiration extends Model
@@ -19,6 +21,15 @@ class RpsExpiration extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => RpsExpirationWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

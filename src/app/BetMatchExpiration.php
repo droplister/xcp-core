@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\BetMatchExpirationWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class BetMatchExpiration extends Model
@@ -19,6 +21,15 @@ class BetMatchExpiration extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => BetMatchExpirationWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

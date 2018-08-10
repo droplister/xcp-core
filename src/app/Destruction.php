@@ -2,10 +2,21 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\DestructionWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Destruction extends Model
 {
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => DestructionWasCreated::class,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

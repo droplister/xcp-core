@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\CancelWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Cancel extends Model
@@ -19,6 +21,15 @@ class Cancel extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => CancelWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

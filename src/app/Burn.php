@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\BurnWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Burn extends Model
@@ -19,6 +21,15 @@ class Burn extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => BurnWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

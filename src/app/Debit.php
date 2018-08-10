@@ -2,10 +2,21 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\DebitWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Debit extends Model
 {
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => DebitWasCreated::class,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

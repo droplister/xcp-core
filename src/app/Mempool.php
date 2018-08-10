@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\MempoolWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Mempool extends Model
@@ -26,6 +28,15 @@ class Mempool extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => MempoolWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\OrderMatchWasCreated;
+use Droplister\XcpCore\App\Events\OrderMatchWasUpdated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class OrderMatch extends Model
@@ -19,6 +22,16 @@ class OrderMatch extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => OrderMatchWasCreated::class,
+        'updated' => OrderMatchWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

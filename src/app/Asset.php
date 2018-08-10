@@ -3,7 +3,9 @@
 namespace Droplister\XcpCore\App;
 
 use Droplister\XcpCore\App\Issuance;
-use Droplister\XcpCore\App\Jobs\UpdateEnhancedAssetInfo;
+use Droplister\XcpCore\App\Events\AssetWasCreated;
+use Droplister\XcpCore\App\Events\AssetWasUpdated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
@@ -21,6 +23,16 @@ class Asset extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => AssetWasCreated::class,
+        'updated' => AssetWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -227,9 +239,6 @@ class Asset extends Model
                 'issuance' => $asset->issuance + $issuance->quantity,
                 'locked' => ! $asset->locked && $issuance->locked ? 1 : $asset->locked,
             ]);
-
-            // Check for enhanced asset info
-            UpdateEnhancedAssetInfo::dispatch($asset);
         }
     }
 }

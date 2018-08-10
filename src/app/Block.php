@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\BlockWasCreated;
+use Droplister\XcpCore\App\Events\BlockWasUpdated;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +23,16 @@ class Block extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => BlockWasCreated::class,
+        'updated' => BlockWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

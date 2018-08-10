@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\TransactionWasCreated;
+use Droplister\XcpCore\App\Events\TransactionWasUpdated;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +23,16 @@ class Transaction extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => TransactionWasCreated::class,
+        'updated' => TransactionWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

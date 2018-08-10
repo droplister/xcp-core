@@ -3,9 +3,11 @@
 namespace Droplister\XcpCore;
 
 use Event;
+use Droplister\XcpCore\App\Events\AssetWasUpdated;
 use Droplister\XcpCore\App\Events\IssuanceWasCreated;
 use Droplister\XcpCore\App\Listeners\CreateAssetFromIssuance;
 use Droplister\XcpCore\App\Listeners\UpdateAssetFromIssuance;
+use Droplister\XcpCore\App\Listeners\UpdateEnhancedAssetInfoAfterUpdate;
 use Illuminate\Support\ServiceProvider;
 
 class XcpCoreServiceProvider extends ServiceProvider
@@ -70,6 +72,7 @@ class XcpCoreServiceProvider extends ServiceProvider
     {
         Event::listen(IssuanceWasCreated::class, CreateAssetFromIssuance::class);
         Event::listen(IssuanceWasCreated::class, UpdateAssetFromIssuance::class);
+        Event::listen(AssetWasUpdated::class, UpdateEnhancedAssetInfoAfterUpdate::class);
     }
 
     /**

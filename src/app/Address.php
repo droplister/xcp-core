@@ -2,6 +2,9 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\AddressWasCreated;
+use Droplister\XcpCore\App\Events\AddressWasUpdated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
@@ -19,6 +22,16 @@ class Address extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => AddressWasCreated::class,
+        'updated' => AddressWasUpdated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,8 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Events\BroadcastWasCreated;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Broadcast extends Model
@@ -19,6 +21,15 @@ class Broadcast extends Model
      * @var boolean
      */
     public $incrementing = false;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => BroadcastWasCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
