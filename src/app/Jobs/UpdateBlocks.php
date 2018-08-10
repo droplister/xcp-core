@@ -116,10 +116,11 @@ class UpdateBlocks implements ShouldQueue
         }
         catch(Throwable $e)
         {
-            // API Error
+            \Log::info($e->getMessage());
         }
         finally
         {
+            \Log::info('6');
             // Keep going
             if($this->syncing) Artisan::call('update:blocks');
         }
