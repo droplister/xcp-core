@@ -6,22 +6,24 @@ This is a Laravel package that takes Counterparty federated node API data and im
 
 In your project, update your ```composer.json``` to reference the ```droplister/xcp-core``` repository and require it, like so...
 
-> ...
->    "repositories": [
->      {
->        "type": "git",
->        "url": "https://github.com/droplister/xcp-core.git"
->      }
->    ],
->    "require": {
->        "php": "^7.1.3",
->        "fideloper/proxy": "^4.0",
->        "laravel/framework": "5.6.*",
->        "laravel/tinker": "^1.0",
->        "laravel/horizon": "^1.3",
->        "droplister/xcp-core": "dev-master"
->    },
-> ...
+```
+...
+    "repositories": [
+      {
+        "type": "git",
+        "url": "https://github.com/droplister/xcp-core.git"
+      }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "fideloper/proxy": "^4.0",
+        "laravel/framework": "5.6.*",
+        "laravel/tinker": "^1.0",
+        "laravel/horizon": "^1.3",
+        "droplister/xcp-core": "dev-master"
+    },
+...
+```
 
 Now, you can run ```composer update``` to install these dependencies. Don't forget to use ```php artisan vendor:publish``` to publish the ```xcp-core.php``` configuration file.
 
