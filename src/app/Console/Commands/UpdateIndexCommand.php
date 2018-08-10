@@ -67,6 +67,9 @@ class UpdateIndexCommand extends Command
             {
                 // Update blocks
                 $this->call('update:blocks');
+
+                // Update supply
+                $this->call('update:supply');
             }
         }
         catch(Throwable $e)
