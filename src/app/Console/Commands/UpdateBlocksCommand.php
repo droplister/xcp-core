@@ -142,7 +142,7 @@ class UpdateBlocksCommand extends Command
         // Get block (if exists)
         $block = Block::orderBy('block_index', 'desc')->first();
 
-        return $block ? $block->block_index : 278319; // Launch
+        return $block ? $block->block_index : config('xcp-core.first_block'); // Launch
     }
 
     /**
