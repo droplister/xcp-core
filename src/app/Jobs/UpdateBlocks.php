@@ -88,7 +88,7 @@ class UpdateBlocks implements ShouldQueue
     {
         try
         {
-            \Log::info('1'));
+            \Log::info('1');
 
             // Get blocks
             $blocks = $this->getBlocks();
@@ -133,12 +133,12 @@ class UpdateBlocks implements ShouldQueue
      */
     private function getBlocks()
     {
-        \Log::info('1a'));
+        \Log::info('1a');
 
         // ['first_index', '...', 'last_index']
         $block_indexes = range($this->first_index, $this->last_index);
 
-        \Log::info('1b'));
+        \Log::info('1b');
 
         return $this->counterparty->execute('get_blocks', [
             'block_indexes' => $block_indexes,
