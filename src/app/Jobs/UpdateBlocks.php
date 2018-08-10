@@ -88,20 +88,30 @@ class UpdateBlocks implements ShouldQueue
     {
         try
         {
+            \Log::info('1'));
+
             // Get blocks
             $blocks = $this->getBlocks();
 
             // Each block
             foreach($blocks as $block_data)
             {
+                \Log::info('2');
+
                 // Process block
                 $block = $this->processBlock($block_data);
+
+                \Log::info('3');
 
                 // Save messages
                 $this->saveMessages($block_data['_messages'], $block_data['block_time']);
 
+                \Log::info('4');
+
                 // Update balances
                 UpdateBalances::dispatch($block);
+                
+                \Log::info('5');
             }
         }
         catch(Throwable $e)
@@ -123,8 +133,12 @@ class UpdateBlocks implements ShouldQueue
      */
     private function getBlocks()
     {
+        \Log::info('1a'));
+
         // ['first_index', '...', 'last_index']
         $block_indexes = range($this->first_index, $this->last_index);
+
+        \Log::info('1b'));
 
         return $this->counterparty->execute('get_blocks', [
             'block_indexes' => $block_indexes,
@@ -139,15 +153,23 @@ class UpdateBlocks implements ShouldQueue
      */
     private function processBlock($block_data)
     {
+        \Log::info('2a');
+
         // Create block
         $block = Block::firstOrCreateBlock($block_data);
+
+        \Log::info('2b');
 
         // Update block
         if($this->guardAgainstInefficientSyncing($block))
         {
+            \Log::info('2c');
+
             // Extra data (non-XCP)
             UpdateBlock::dispatch($block);
         }
+
+        \Log::info('2d');
 
         return $block;
     }
@@ -161,14 +183,20 @@ class UpdateBlocks implements ShouldQueue
      */
     private function saveMessages($messages, $block_time)
     {
+        \Log::info('3a');
+
         // Sort so inserts are always before updates
         usort($messages, function ($message1, $message2) {
             return $message1['command'] <=> $message2['command'];
         });
 
+        \Log::info('3b');
+
         // Each message
         foreach($messages as $message)
         {
+            \Log::info('3c');
+
             $this->saveMessage($message, $block_time);
         }
     }
@@ -182,12 +210,18 @@ class UpdateBlocks implements ShouldQueue
      */
     private function saveMessage($message, $block_time)
     {
+        \Log::info('3ci');
+
         // Get bindings
         $bindings = $this->getBindings($message, $block_time);
+
+        \Log::info('3cii');
 
         // Save message
         if(Message::firstOrCreateMessage($message, $bindings))
         {
+            \Log::info('3ciii');
+
             $this->executeCommand($message, $bindings);
         }
     }
