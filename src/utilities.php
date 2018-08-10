@@ -54,7 +54,7 @@ function getAddressType($address)
     {
         return 'p2sh';
     }
-    elseif($address[0] === 'bc1' || $address[0] === 'tb1')
+    elseif($address[0] === 'b' || $address[0] === 't')
     {
         return 'bech32';
     }

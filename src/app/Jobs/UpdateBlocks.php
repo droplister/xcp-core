@@ -106,7 +106,7 @@ class UpdateBlocks implements ShouldQueue
         }
         catch(Throwable $e)
         {
-            \Log::error($e->getMessage());
+            // API Error
         }
         finally
         {
