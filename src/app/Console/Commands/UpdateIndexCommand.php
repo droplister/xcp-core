@@ -74,7 +74,7 @@ class UpdateIndexCommand extends Command
         }
         catch(Throwable $e)
         {
-            // API Error
+            \Log::error($e->getMessage());
         }
     }
 
