@@ -107,9 +107,6 @@ class UpdateBlocks implements ShouldQueue
         catch(Throwable $e)
         {
             \Log::error($e->getMessage());
-            \Log::error($this->first_index);
-            \Log::error($this->last_index);
-            \Log::error((string) $this->syncing);
         }
         finally
         {

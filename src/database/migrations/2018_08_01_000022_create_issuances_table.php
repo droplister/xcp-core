@@ -27,7 +27,7 @@ class CreateIssuancesTable extends Migration
             $table->boolean('transfer');
             $table->boolean('callable');
             $table->unsignedBigInteger('call_date');
-            $table->decimal('call_price');
+            $table->decimal('call_price', 11, 2);
             $table->text('description');
             $table->unsignedBigInteger('fee_paid');
             $table->boolean('locked');
