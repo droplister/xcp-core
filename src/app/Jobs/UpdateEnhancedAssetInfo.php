@@ -77,6 +77,16 @@ class UpdateEnhancedAssetInfo implements ShouldQueue
                 $this->updateAsset($data);
             }
         }
+        else
+        {
+            // Handle un-enhancing assets
+            if($this->asset->meta !== null)
+            {
+                $this->asset->update([
+                    'meta' => null,
+                ]);
+            }
+        }
     }
 
     /**

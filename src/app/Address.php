@@ -43,6 +43,7 @@ class Address extends Model
         'address',
         'type',
         'options',
+        'burn',
         'confirmed_at',
     ];
 
