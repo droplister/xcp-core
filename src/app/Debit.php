@@ -2,12 +2,15 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\DebitWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Debit extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * The event map for the model.
      *

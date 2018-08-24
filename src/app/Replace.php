@@ -2,12 +2,15 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\ReplaceWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Replace extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * The event map for the model.
      *

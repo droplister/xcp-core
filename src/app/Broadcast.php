@@ -2,12 +2,15 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\BroadcastWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Broadcast extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * Primary Key
      *

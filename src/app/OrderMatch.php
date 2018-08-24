@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\OrderMatchWasCreated;
 use Droplister\XcpCore\App\Events\OrderMatchWasUpdated;
 
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderMatch extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * Primary Key
      *

@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\TransactionWasCreated;
 use Droplister\XcpCore\App\Events\TransactionWasUpdated;
 
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * Primary Key
      *

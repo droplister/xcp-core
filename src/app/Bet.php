@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\BetWasCreated;
 use Droplister\XcpCore\App\Events\BetWasUpdated;
 
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bet extends Model
 {
+    use CreatesWithLock;
+
     /**
      * Primary Key
      *

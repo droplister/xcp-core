@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\RpsMatchWasCreated;
 use Droplister\XcpCore\App\Events\RpsMatchWasUpdated;
 
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RpsMatch extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * Primary Key
      *

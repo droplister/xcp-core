@@ -2,12 +2,15 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\PostqueueWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Postqueue extends Model
 {
+    use CreatesWithLock;
+    
     /**
      * Table Name
      *
