@@ -65,6 +65,9 @@ class UpdateIndexCommand extends Command
             // Only fire when necessary
             if($this->isNewBlockIndex())
             {
+                // Useful Switch
+                if(config('xcp-core.syncing')) return false;
+
                 // Update blocks
                 $this->call('update:blocks');
 
