@@ -99,14 +99,14 @@ class UpdateBlocksCommand extends Command
             // Regular update
             $last_index = $global_index;
 
-            UpdateBlocks::dispatch($first_index, $last_index);
+            UpdateBlocks::dispatchNow($first_index, $last_index);
         }
         else
         {
             // Syncing update
             $last_index = $first_index + $minimum_sync;
 
-            UpdateBlocks::dispatch($first_index, $last_index, true);
+            UpdateBlocks::dispatchNow($first_index, $last_index, true);
         }
     }
 
