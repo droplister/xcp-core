@@ -2,15 +2,12 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\MempoolWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Mempool extends Model
 {
-    use CreatesWithLock;
-    
     /**
      * Table Name
      *

@@ -3,7 +3,6 @@
 namespace Droplister\XcpCore\App;
 
 use Droplister\XcpCore\App\Issuance;
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\AssetWasCreated;
 use Droplister\XcpCore\App\Events\AssetWasUpdated;
 
@@ -11,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
-    use CreatesWithLock;
-
     /**
      * Primary Key
      *

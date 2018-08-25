@@ -2,7 +2,6 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\BalanceWasCreated;
 use Droplister\XcpCore\App\Events\BalanceWasUpdated;
 
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Balance extends Model
 {
-    use CreatesWithLock;
-
     /**
      * The event map for the model.
      *

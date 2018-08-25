@@ -2,7 +2,6 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\OrderWasCreated;
 use Droplister\XcpCore\App\Events\OrderWasUpdated;
 
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use CreatesWithLock;
-    
     /**
      * Primary Key
      *

@@ -2,7 +2,6 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\RpsWasCreated;
 use Droplister\XcpCore\App\Events\RpsWasUpdated;
 
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rps extends Model
 {
-    use CreatesWithLock;
-    
     /**
      * Primary Key
      *

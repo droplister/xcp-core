@@ -2,15 +2,12 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Traits\CreatesWithLock;
 use Droplister\XcpCore\App\Events\MessageWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    use CreatesWithLock;
-    
     /**
      * Primary Key
      *
