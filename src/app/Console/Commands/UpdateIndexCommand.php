@@ -3,7 +3,7 @@
 namespace Droplister\XcpCore\App\Console\Commands;
 
 use JsonRPC\Client;
-use Cache, Throwable;
+use Cache, Log, Throwable;
 use Illuminate\Console\Command;
 
 class UpdateIndexCommand extends Command
@@ -74,7 +74,7 @@ class UpdateIndexCommand extends Command
         }
         catch(Throwable $e)
         {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 

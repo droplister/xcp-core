@@ -4,7 +4,7 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Carbon\Carbon;
 use JsonRPC\Client;
-use Artisan, DB, Redis, Throwable;
+use Artisan, DB, Log, Redis, Throwable;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Address;
 use Droplister\XcpCore\App\Message;
@@ -15,6 +15,7 @@ use Droplister\XcpCore\App\Jobs\UpdateBalances;
 use Droplister\XcpCore\App\Jobs\UpdateTransaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Database\QueryException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -104,9 +105,16 @@ class UpdateBlocks implements ShouldQueue
                 UpdateBalances::dispatch($block);                
             }
         }
+        catch (QueryException $e)
+        {
+            if($e->errorInfo[1] !== 1062)
+            {
+                Log::error($e->getMessage());
+            }
+        }
         catch(Throwable $e)
         {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
         finally
         {
