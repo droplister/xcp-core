@@ -91,6 +91,9 @@ class UpdateBlocks implements ShouldQueue
             // Get blocks
             $blocks = $this->getBlocks();
 
+            // API failed
+            if(! is_array($blocks)) return false;
+
             // Each block
             foreach($blocks as $block_data)
             {
