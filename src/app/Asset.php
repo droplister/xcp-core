@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Debit;
 use Droplister\XcpCore\App\Issuance;
 use Droplister\XcpCore\App\Events\AssetWasCreated;
 use Droplister\XcpCore\App\Events\AssetWasUpdated;
@@ -101,6 +102,58 @@ class Asset extends Model
     public function getIssuanceNormalizedAttribute()
     {
         return normalizeQuantity($this->issuance, $this->divisible);
+    }
+
+    /**
+     * Burned
+     *
+     * @return string
+     */
+    public function getBurnedAttribute()
+    {
+        // Burned Quantity
+        $burned = $this->balances()->whereHas('addressModel', function ($address) {
+            $address->where('burn', '=', 1);
+        })->sum('quantity');
+
+        // XCP Gas Fees
+        if($this->asset_name === 'XCP')
+        {
+            $gas_fees = Debit::where('action', 'like', '% fee')->sum('quantity');
+            $burned = $burned + $gas_fees;
+        }
+
+        return $burned;
+    }
+
+    /**
+     * Burned Normalized
+     *
+     * @return string
+     */
+    public function getBurnedNormalizedAttribute()
+    {
+        return normalizeQuantity($this->burned, $this->divisible);
+    }
+
+    /**
+     * Supply
+     *
+     * @return string
+     */
+    public function getSupplyAttribute()
+    {
+        return $this->issuance - $this->burned;
+    }
+
+    /**
+     * Supply Normalized
+     *
+     * @return string
+     */
+    public function getSupplyNormalizedAttribute()
+    {
+        return normalizeQuantity($this->supply, $this->divisible);
     }
 
     /**
