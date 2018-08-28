@@ -109,7 +109,7 @@ class OrderMatch extends Model
      */
     public function getTradingPairNormalizedAttribute()
     {
-        $assets = $this->assetsToTradingPair($this->backward_asset, $this->forward_asset);
+        $assets = assetsToTradingPair($this->backward_asset, $this->forward_asset);
 
         return "{$assets[0]}/{$assets[1]}";
     }
@@ -121,9 +121,9 @@ class OrderMatch extends Model
      */
     public function getTradingPriceNormalizedAttribute()
     {
-        $quantities = $this->quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
+        $quantities = quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
 
-        return $this->quantitiesToTradingPrice($quantities[0], $quantities[1]);
+        return quantitiesToTradingPrice($quantities[0], $quantities[1]);
     }
 
     /**
