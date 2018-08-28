@@ -25,7 +25,7 @@ class CreateRpsTable extends Migration
             $table->unsignedInteger('expiration');
             $table->unsignedInteger('expire_index');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

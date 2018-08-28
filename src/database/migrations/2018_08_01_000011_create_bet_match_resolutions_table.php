@@ -24,7 +24,7 @@ class CreateBetMatchResolutionsTable extends Migration
             $table->unsignedBigInteger('bear_credit')->nullable();
             $table->unsignedBigInteger('escrow_less_fee')->nullable();
             $table->unsignedBigInteger('fee');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('bet_match_id');

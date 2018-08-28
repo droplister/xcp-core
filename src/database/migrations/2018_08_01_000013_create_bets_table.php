@@ -32,7 +32,7 @@ class CreateBetsTable extends Migration
             $table->unsignedInteger('expire_index');
             $table->unsignedInteger('fee_fraction_int');
             $table->string('status');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

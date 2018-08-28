@@ -22,7 +22,7 @@ class CreateContractsTable extends Migration
             $table->string('source')->index();
             $table->binary('code');
             $table->unsignedInteger('nonce');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('contract_id');

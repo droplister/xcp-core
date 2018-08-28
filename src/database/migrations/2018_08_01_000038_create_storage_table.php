@@ -18,7 +18,7 @@ class CreateStorageTable extends Migration
             $table->string('contract_id');
             $table->binary('key');
             $table->binary('value');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
         });
     }

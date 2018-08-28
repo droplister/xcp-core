@@ -16,7 +16,7 @@ class CreateSuicidesTable extends Migration
         Schema::create('suicides', function (Blueprint $table) {
             // Columns
             $table->string('contract_id')->unique();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('contract_id');

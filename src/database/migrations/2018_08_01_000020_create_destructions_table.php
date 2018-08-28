@@ -23,7 +23,7 @@ class CreateDestructionsTable extends Migration
             $table->unsignedBigInteger('quantity');
             $table->string('tag');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

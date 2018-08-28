@@ -29,7 +29,7 @@ class CreateExecutionsTable extends Migration
             $table->binary('data');
             $table->binary('output');
             $table->string('status');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
         });
     }

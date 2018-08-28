@@ -33,7 +33,7 @@ class CreateRpsMatchesTable extends Migration
             $table->unsignedInteger('tx1_expiration');
             $table->unsignedInteger('match_expire_index')->index();
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('id');

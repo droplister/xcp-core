@@ -39,7 +39,7 @@ class CreateBetMatchesTable extends Migration
             $table->unsignedInteger('match_expire_index');
             $table->unsignedInteger('fee_fraction_int');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('id');

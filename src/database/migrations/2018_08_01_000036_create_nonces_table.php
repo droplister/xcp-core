@@ -17,7 +17,7 @@ class CreateNoncesTable extends Migration
             // Columns
             $table->string('address')->unique();
             $table->unsignedInteger('nonce');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('address');

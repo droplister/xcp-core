@@ -27,7 +27,7 @@ class CreateAssetsTable extends Migration
             $table->unsignedBigInteger('issuance')->default(0);
             $table->boolean('divisible')->default(0);
             $table->boolean('locked')->default(0);
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('asset_name');

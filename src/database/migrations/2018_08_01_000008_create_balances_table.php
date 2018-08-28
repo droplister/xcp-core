@@ -19,7 +19,7 @@ class CreateBalancesTable extends Migration
             $table->string('address')->index();
             $table->string('asset')->index();
             $table->unsignedBigInteger('quantity');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->index(['address', 'asset']);

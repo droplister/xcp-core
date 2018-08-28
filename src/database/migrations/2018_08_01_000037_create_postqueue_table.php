@@ -17,7 +17,7 @@ class CreatePostqueueTable extends Migration
             // Columns
             $table->increments('id');
             $table->binary('message');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
         });
     }

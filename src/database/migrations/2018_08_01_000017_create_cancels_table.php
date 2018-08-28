@@ -21,7 +21,7 @@ class CreateCancelsTable extends Migration
             $table->string('source')->index();
             $table->string('offer_hash');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

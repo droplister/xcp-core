@@ -19,7 +19,7 @@ class CreateBetExpirationsTable extends Migration
             $table->unsignedInteger('block_index')->index();
             $table->string('bet_hash')->unique();
             $table->string('source')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('bet_index');

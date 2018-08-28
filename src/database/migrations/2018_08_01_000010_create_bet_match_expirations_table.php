@@ -19,7 +19,7 @@ class CreateBetMatchExpirationsTable extends Migration
             $table->unsignedInteger('block_index')->index();
             $table->string('tx0_address')->index();
             $table->string('tx1_address')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('bet_match_id');

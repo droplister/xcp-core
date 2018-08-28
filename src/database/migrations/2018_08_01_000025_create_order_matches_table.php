@@ -34,7 +34,7 @@ class CreateOrderMatchesTable extends Migration
             $table->unsignedInteger('match_expire_index');
             $table->bigInteger('fee_paid');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('id');

@@ -31,7 +31,7 @@ class CreateTransactionsTable extends Migration
             $table->json('raw')->nullable();
             $table->boolean('valid');
             $table->unsignedBigInteger('timestamp');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamp('processed_at')->nullable()->index();
             $table->timestamps();
             // Indexes

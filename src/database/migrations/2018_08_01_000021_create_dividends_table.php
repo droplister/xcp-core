@@ -24,7 +24,7 @@ class CreateDividendsTable extends Migration
             $table->unsignedBigInteger('quantity_per_unit');
             $table->unsignedBigInteger('fee_paid');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

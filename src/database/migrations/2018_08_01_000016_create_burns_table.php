@@ -22,7 +22,7 @@ class CreateBurnsTable extends Migration
             $table->unsignedBigInteger('burned');
             $table->unsignedBigInteger('earned');
             $table->string('status')->index();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

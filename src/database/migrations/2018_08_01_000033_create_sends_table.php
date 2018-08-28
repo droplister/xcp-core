@@ -24,7 +24,7 @@ class CreateSendsTable extends Migration
             $table->unsignedBigInteger('quantity');
             $table->string('status')->index();
             $table->string('memo')->nullable();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

@@ -33,7 +33,7 @@ class CreateIssuancesTable extends Migration
             $table->boolean('locked');
             $table->string('status')->index();
             $table->string('asset_longname')->nullable();
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('tx_index');

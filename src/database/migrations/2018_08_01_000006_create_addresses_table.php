@@ -20,7 +20,7 @@ class CreateAddressesTable extends Migration
             $table->unsignedInteger('options')->default(0);
             $table->unsignedInteger('block_index')->index();
             $table->boolean('burn')->default(0);
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
             // Indexes
             $table->primary('address');

@@ -22,7 +22,7 @@ class CreateDebitsTable extends Migration
             $table->unsignedBigInteger('quantity');
             $table->string('action');
             $table->string('event');
-            $table->timestamp('confirmed_at')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
             $table->timestamps();
         });
     }
