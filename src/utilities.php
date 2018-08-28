@@ -294,7 +294,7 @@ function generateLookupKey($haystack, $replace)
  */
 function quantitiesInBaseQuoteOrder($get_asset, $get_quantity, $give_asset, $give_quantity)
 {
-    $assets = $this->assetsToTradingPair($get_asset, $give_asset);
+    $assets = assetsToTradingPair($get_asset, $give_asset);
 
     return $assets[0] === $get_asset ? [$get_quantity, $give_quantity] : [$give_quantity, $get_quantity];
 }
@@ -323,7 +323,7 @@ function quantitiesToTradingPrice($base_quantity, $quote_quantity)
 function assetsToTradingPair($asset1, $asset2)
 {
     // Get Quote Assets
-    $quote_assets = $this->defaultQuoteAssets();
+    $quote_assets = config('xcp-core.quote_assets');
 
     // Standardize Pair
     foreach($quote_assets as $quote_asset)
@@ -337,33 +337,4 @@ function assetsToTradingPair($asset1, $asset2)
 
     // Default to Alphabetical
     return $asset1 < $asset2 ? [$asset1, $asset2] : [$asset2, $asset1];
-}
-
-/**
- * Default Quote Assets
- * 
- * @return array
- */
-function defaultQuoteAssets()
-{
-    return [
-        'BTC',
-        'XCP',
-        'XBTC',
-        'FLDC',
-        'NVST',
-        'SJCX',
-        'VACUS',
-        'BITCRYSTALS',
-        'LTBCOIN',
-        'SCOTCOIN',
-        'PEPECASH',
-        'BITCORN',
-        'DATABITS',
-        'MAFIACASH',
-        'PENISIUM',
-        'RUSTBITS',
-        'WILLCOIN',
-        'XFCCOIN',
-    ];
 }
