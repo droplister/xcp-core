@@ -78,6 +78,8 @@ class Order extends Model
         'get_remaining_normalized',
         'give_quantity_normalized',
         'give_remaining_normalized',
+        'trading_pair_normalized',
+        'trading_price_normalized',
     ];
 
     /**
@@ -118,6 +120,30 @@ class Order extends Model
     public function getGiveRemainingNormalizedAttribute()
     {
         return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+    }
+
+    /**
+     * Trading Pair Normalized
+     *
+     * @return string
+     */
+    public function getTradingPairNormalizedAttribute()
+    {
+        $assets = $this->assetsToTradingPair($this->get_asset, $this->give_asset);
+
+        return "{$assets[0]}/{$assets[1]}";
+    }
+
+    /**
+     * Trading Price Normalized
+     *
+     * @return string
+     */
+    public function getTradingPriceNormalizedAttribute()
+    {
+        $quantities = $this->quantitiesInBaseQuoteOrder($this->get_asset, $this->get_quantity_normalized, $this->give_asset, $this->give_quantity_normalized);
+
+        return $this->quantitiesToTradingPrice($quantities[0], $quantities[1]);
     }
 
     /**

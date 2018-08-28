@@ -78,6 +78,8 @@ class OrderMatch extends Model
     protected $appends = [
         'backward_quantity_normalized',
         'forward_quantity_normalized',
+        'trading_pair_normalized',
+        'trading_price_normalized',
     ];
 
     /**
@@ -101,6 +103,30 @@ class OrderMatch extends Model
     }
 
     /**
+     * Trading Pair Normalized
+     *
+     * @return string
+     */
+    public function getTradingPairNormalizedAttribute()
+    {
+        $assets = $this->assetsToTradingPair($this->backward_asset, $this->forward_asset);
+
+        return "{$assets[0]}/{$assets[1]}";
+    }
+
+    /**
+     * Trading Price Normalized
+     *
+     * @return string
+     */
+    public function getTradingPriceNormalizedAttribute()
+    {
+        $quantities = $this->quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
+
+        return $this->quantitiesToTradingPrice($quantities[0], $quantities[1]);
+    }
+
+    /**
      * Backward Asset
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -119,5 +145,4 @@ class OrderMatch extends Model
     {
         return $this->belongsTo(Asset::class, 'forward_asset', 'asset_name');
     }
-
 }

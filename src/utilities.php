@@ -286,3 +286,84 @@ function generateLookupKey($haystack, $replace)
     // bet_matches -> bet_index
     return str_replace($needle, $replace, $haystack);
 }
+
+/**
+ * Quantity In Base Quote Order
+ * 
+ * @return array
+ */
+function quantitiesInBaseQuoteOrder($get_asset, $get_quantity, $give_asset, $give_quantity)
+{
+    $assets = $this->assetsToTradingPair($get_asset, $give_asset);
+
+    return $assets[0] === $get_asset ? [$get_quantity, $give_quantity] : [$give_quantity, $get_quantity];
+}
+
+/**
+ * Quantities to Trading Price
+ * 
+ * @param  float  $base_quantity
+ * @param  float  $quote_quantity
+ * @return float
+ */
+function quantitiesToTradingPrice($base_quantity, $quote_quantity)
+{
+    $price = $quote_quantity / $base_quantity;
+
+    return sprintf("%.8f", $price);
+}
+
+/**
+ * Assets to Trading Pair
+ * 
+ * @param  string  $asset1
+ * @param  string  $asset2
+ * @return string
+ */
+function assetsToTradingPair($asset1, $asset2)
+{
+    // Get Quote Assets
+    $quote_assets = $this->defaultQuoteAssets();
+
+    // Standardize Pair
+    foreach($quote_assets as $quote_asset)
+    {
+        // Default Quote Asset
+        if($asset1 === $quote_asset || $asset2 === $quote_asset)
+        {
+            return $asset1 === $quote_asset ? [$asset2, $asset1] : [$asset1, $asset2];
+        }
+    }
+
+    // Default to Alphabetical
+    return $asset1 < $asset2 ? [$asset1, $asset2] : [$asset2, $asset1];
+}
+
+/**
+ * Default Quote Assets
+ * 
+ * @return array
+ */
+function defaultQuoteAssets()
+{
+    return [
+        'BTC',
+        'XCP',
+        'XBTC',
+        'FLDC',
+        'NVST',
+        'SJCX',
+        'VACUS',
+        'BITCRYSTALS',
+        'LTBCOIN',
+        'SCOTCOIN',
+        'PEPECASH',
+        'BITCORN',
+        'DATABITS',
+        'MAFIACASH',
+        'PENISIUM',
+        'RUSTBITS',
+        'WILLCOIN',
+        'XFCCOIN',
+    ];
+}
