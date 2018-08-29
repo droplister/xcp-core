@@ -62,9 +62,9 @@ class Btcpay extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'btc_amount_normalized',
-    ];
+    // protected $appends = [
+    //     'btc_amount_normalized',
+    // ];
 
     /**
      * BTC Amount Normalized

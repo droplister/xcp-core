@@ -79,10 +79,10 @@ class Asset extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'display_name',
-        'issuance_normalized',
-    ];
+    // protected $appends = [
+    //     'display_name',
+    //     'issuance_normalized',
+    // ];
 
     /**
      * Display Name

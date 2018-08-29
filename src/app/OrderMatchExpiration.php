@@ -52,5 +52,4 @@ class OrderMatchExpiration extends Model
     protected $dates = [
         'confirmed_at',
     ];
-
 }

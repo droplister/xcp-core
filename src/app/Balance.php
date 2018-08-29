@@ -45,9 +45,9 @@ class Balance extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'quantity_normalized',
-    ];
+    // protected $appends = [
+    //     'quantity_normalized',
+    // ];
 
     /**
      * Quantity Normalized

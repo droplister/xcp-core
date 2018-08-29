@@ -73,13 +73,13 @@ class Bet extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'display_type',
-        'wager_quantity_normalized',
-        'wager_remaining_normalized',
-        'counterwager_quantity_normalized',
-        'counterwager_remaining_normalized',
-    ];
+    // protected $appends = [
+    //     'display_type',
+    //     'wager_quantity_normalized',
+    //     'wager_remaining_normalized',
+    //     'counterwager_quantity_normalized',
+    //     'counterwager_remaining_normalized',
+    // ];
 
     /**
      * Display Type

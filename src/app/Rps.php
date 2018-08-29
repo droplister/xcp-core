@@ -66,9 +66,9 @@ class Rps extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'wager_normalized'
-    ];
+    // protected $appends = [
+    //     'wager_normalized'
+    // ];
 
     /**
      * Wager Normalized

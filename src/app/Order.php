@@ -73,14 +73,14 @@ class Order extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'get_quantity_normalized',
-        'get_remaining_normalized',
-        'give_quantity_normalized',
-        'give_remaining_normalized',
-        'trading_pair_normalized',
-        'trading_price_normalized',
-    ];
+    // protected $appends = [
+    //     'get_quantity_normalized',
+    //     'get_remaining_normalized',
+    //     'give_quantity_normalized',
+    //     'give_remaining_normalized',
+    //     'trading_pair_normalized',
+    //     'trading_price_normalized',
+    // ];
 
     /**
      * Get Quantity Normalized

@@ -75,12 +75,12 @@ class OrderMatch extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'backward_quantity_normalized',
-        'forward_quantity_normalized',
-        'trading_pair_normalized',
-        'trading_price_normalized',
-    ];
+    // protected $appends = [
+    //     'backward_quantity_normalized',
+    //     'forward_quantity_normalized',
+    //     'trading_pair_normalized',
+    //     'trading_price_normalized',
+    // ];
 
     /**
      * Get Backward Quantity Normalized

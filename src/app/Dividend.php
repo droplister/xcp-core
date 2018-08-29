@@ -63,10 +63,10 @@ class Dividend extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'fee_paid_normalized',
-        'quantity_per_unit_normalized',
-    ];
+    // protected $appends = [
+    //     'fee_paid_normalized',
+    //     'quantity_per_unit_normalized',
+    // ];
 
     /**
      * Fee Paid Normalized

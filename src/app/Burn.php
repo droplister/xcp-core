@@ -61,10 +61,10 @@ class Burn extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'burned_normalized',
-        'earned_normalized',
-    ];
+    // protected $appends = [
+    //     'burned_normalized',
+    //     'earned_normalized',
+    // ];
 
     /**
      * Burned Normalized

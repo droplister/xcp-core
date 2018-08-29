@@ -71,11 +71,11 @@ class Issuance extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'display_name',
-        'fee_paid_normalized',
-        'quantity_normalized',
-    ];
+    // protected $appends = [
+    //     'display_name',
+    //     'fee_paid_normalized',
+    //     'quantity_normalized',
+    // ];
 
     /**
      * Display Name

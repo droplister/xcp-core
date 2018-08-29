@@ -84,10 +84,10 @@ class Transaction extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'fee_normalized',
-        'quantity_normalized',
-    ];
+    // protected $appends = [
+    //     'fee_normalized',
+    //     'quantity_normalized',
+    // ];
 
     /**
      * Get Fee Normalized
