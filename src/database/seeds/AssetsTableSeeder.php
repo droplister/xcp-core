@@ -51,11 +51,12 @@ class AssetsTableSeeder extends Seeder
             $issuance = $this->getSupply($asset);
 
             // Create it!
-            Asset::create([
+            Asset::firstOrCreate([
+                'asset_name' => $asset['asset'],
+            ],[
                 'type' => 'asset',
                 'divisible' => 1,
                 'issuance' => $issuance,
-                'asset_name' => $asset['asset'],
                 'block_index' => $asset['block_index'],
                 'confirmed_at' => $asset['confirmed_at'],
             ]);
