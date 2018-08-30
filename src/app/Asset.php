@@ -227,6 +227,46 @@ class Asset extends Model
     }
 
     /**
+     * Order Matches (Backward)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function backwardOrderMatches()
+    {
+        return $this->hasMany(OrderMatch::class, 'backward_asset', 'asset_name');
+    }
+
+    /**
+     * Order Matches (Forward)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function forwardOrderMatches()
+    {
+        return $this->hasMany(OrderMatch::class, 'forward_asset', 'asset_name');
+    }
+
+    /**
+     * Orders (Get)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, 'get_asset', 'asset_name');
+    }
+
+    /**
+     * Orders (Give)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function giveOrders()
+    {
+        return $this->hasMany(Order::class, 'give_asset', 'asset_name');
+    }
+
+    /**
      * Sends
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
