@@ -483,16 +483,18 @@ class UpdateBlocks implements ShouldQueue
     {
         if($model instanceof Block)
         {
+            // Advanced +
             // Not syncing +
             // Block not processed +
             // Bitcoin Core API available
-            return ! $this->syncing && ! $model->processed_at && config('xcp-core.bc.api');
+            return config('xcp-core.advanced') && ! $this->syncing && ! $model->processed_at && config('xcp-core.bc.api');
         }
         else
         {
+            // Advanced +
             // Not syncing +
             // Model not processed +
-            return ! $this->syncing && ! $model->processed_at;
+            return config('xcp-core.advanced') && ! $this->syncing && ! $model->processed_at;
         }
     }
 
