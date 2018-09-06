@@ -31,6 +31,8 @@ function toSatoshi($decimal)
  */
 function normalizeQuantity($quantity, $divisible)
 {
+    if($quantity < 0) $quantity = 0;
+
     return $divisible ? fromSatoshi($quantity) : sprintf("%.8f", $quantity);
 }
 
