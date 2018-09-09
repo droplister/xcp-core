@@ -110,8 +110,10 @@ class OrderMatch extends Model
     public function getTradingPairNormalizedAttribute()
     {
         $assets = assetsToTradingPair($this->backward_asset, $this->forward_asset);
+        $base_asset = Asset::find($assets[0])->display_name;
+        $quote_asset = Asset::find($assets[1])->display_name;
 
-        return "{$assets[0]}/{$assets[1]}";
+        return "{$base_asset}/{$quote_asset}";
     }
 
     /**

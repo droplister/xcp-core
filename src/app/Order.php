@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Droplister\XcpCore\App\Asset;
 use Droplister\XcpCore\App\Events\OrderWasCreated;
 use Droplister\XcpCore\App\Events\OrderWasUpdated;
 
@@ -130,8 +131,10 @@ class Order extends Model
     public function getTradingPairNormalizedAttribute()
     {
         $assets = assetsToTradingPair($this->get_asset, $this->give_asset);
+        $base_asset = Asset::find($assets[0])->display_name;
+        $quote_asset = Asset::find($assets[1])->display_name;
 
-        return "{$assets[0]}/{$assets[1]}";
+        return "{$base_asset}/{$quote_asset}";
     }
 
     /**
