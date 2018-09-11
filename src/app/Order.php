@@ -95,7 +95,7 @@ class Order extends Model
      */
     public function getGetQuantityNormalizedAttribute()
     {
-        return Cache::rememberForever('o_geqn_' . $this->id, function () {
+        return Cache::rememberForever('o_geqn_' . $this->tx_index, function () {
             return normalizeQuantity($this->get_quantity, $this->getAssetModel->divisible);
         });
     }
@@ -109,12 +109,12 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return Cache::remember('o_gern_' . $this->id, 1, function () {
+            return Cache::remember('o_gern_' . $this->tx_index, 1, function () {
                 return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
             });
         }
 
-        return Cache::rememberForever('o_gern_' . $this->id, function () {
+        return Cache::rememberForever('o_gern_' . $this->tx_index, function () {
             return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
         });
     }
@@ -126,7 +126,7 @@ class Order extends Model
      */
     public function getGiveQuantityNormalizedAttribute()
     {
-        return Cache::rememberForever('o_giqn_' . $this->id, function () {
+        return Cache::rememberForever('o_giqn_' . $this->tx_index, function () {
             return normalizeQuantity($this->give_quantity, $this->giveAssetModel->divisible);
         });
     }
@@ -140,12 +140,12 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return Cache::remember('o_girn_' . $this->id, 1, function () {
+            return Cache::remember('o_girn_' . $this->tx_index, 1, function () {
                 return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
             });
         }
 
-        return Cache::rememberForever('o_girn_' . $this->id, function () {
+        return Cache::rememberForever('o_girn_' . $this->tx_index, function () {
             return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
         });
     }
@@ -157,7 +157,7 @@ class Order extends Model
      */
     public function getTradingPairNormalizedAttribute()
     {
-        return Cache::rememberForever('o_tp_' . $this->id, function () {
+        return Cache::rememberForever('o_tp_' . $this->tx_index, function () {
             $assets = assetsToTradingPair($this->get_asset, $this->give_asset);
             $base_asset = Asset::find($assets[0])->display_name;
             $quote_asset = Asset::find($assets[1])->display_name;
@@ -173,7 +173,7 @@ class Order extends Model
      */
     public function getTradingBaseAssetAttribute()
     {
-        return Cache::rememberForever('o_tba_' . $this->id, function () {
+        return Cache::rememberForever('o_tba_' . $this->tx_index, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[0])
                 ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[0])
                 ->first()
@@ -188,7 +188,7 @@ class Order extends Model
      */
     public function getTradingQuoteAssetAttribute()
     {
-        return Cache::rememberForever('o_tqa_' . $this->id, function () {
+        return Cache::rememberForever('o_tqa_' . $this->tx_index, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[1])
                 ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[1])
                 ->first()
@@ -203,7 +203,7 @@ class Order extends Model
      */
     public function getTradingPriceNormalizedAttribute()
     {
-        return Cache::rememberForever('o_tpn_' . $this->id, function () {
+        return Cache::rememberForever('o_tpn_' . $this->tx_index, function () {
             $quantities = quantitiesInBaseQuoteOrder($this->get_asset, $this->get_quantity_normalized, $this->give_asset, $this->give_quantity_normalized);
 
             return quantitiesToTradingPrice($quantities[0], $quantities[1]);
@@ -219,12 +219,12 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return Cache::remember('o_tqn_' . $this->id, 1, function () {
+            return Cache::remember('o_tqn_' . $this->tx_index, 1, function () {
                 return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
             });
         }
 
-        return Cache::rememberForever('o_tqn_' . $this->id, function () {
+        return Cache::rememberForever('o_tqn_' . $this->tx_index, function () {
             return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
         });
     }
@@ -238,12 +238,12 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return Cache::remember('o_ttn_' . $this->id, 1, function () {
+            return Cache::remember('o_ttn_' . $this->tx_index, 1, function () {
                 return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
             });
         }
 
-        return Cache::rememberForever('o_ttn_' . $this->id, function () {
+        return Cache::rememberForever('o_ttn_' . $this->tx_index, function () {
             return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
         });
     }
