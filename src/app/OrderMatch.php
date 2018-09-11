@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Cache;
 use Droplister\XcpCore\App\Events\OrderMatchWasCreated;
 use Droplister\XcpCore\App\Events\OrderMatchWasUpdated;
 
@@ -89,7 +90,9 @@ class OrderMatch extends Model
      */
     public function getBackwardQuantityNormalizedAttribute()
     {
-        return normalizeQuantity($this->backward_quantity, $this->backwardAssetModel->divisible);
+        return Cache::rememberForever('om_bqn_' . $this->id, function () {
+            return normalizeQuantity($this->backward_quantity, $this->backwardAssetModel->divisible);
+        });
     }
 
     /**
@@ -99,7 +102,9 @@ class OrderMatch extends Model
      */
     public function getForwardQuantityNormalizedAttribute()
     {
-        return normalizeQuantity($this->forward_quantity, $this->forwardAssetModel->divisible);
+        return Cache::rememberForever('om_fqn_' . $this->id, function () {
+            return normalizeQuantity($this->forward_quantity, $this->forwardAssetModel->divisible);
+        });
     }
 
     /**
@@ -109,11 +114,13 @@ class OrderMatch extends Model
      */
     public function getTradingPairNormalizedAttribute()
     {
-        $assets = assetsToTradingPair($this->backward_asset, $this->forward_asset);
-        $base_asset = Asset::find($assets[0])->display_name;
-        $quote_asset = Asset::find($assets[1])->display_name;
+        return Cache::rememberForever('om_tp_' . $this->id, function () {
+            $assets = assetsToTradingPair($this->backward_asset, $this->forward_asset);
+            $base_asset = Asset::find($assets[0])->display_name;
+            $quote_asset = Asset::find($assets[1])->display_name;
 
-        return "{$base_asset}/{$quote_asset}";
+            return "{$base_asset}/{$quote_asset}";
+        });
     }
 
     /**
@@ -123,9 +130,11 @@ class OrderMatch extends Model
      */
     public function getTradingPriceNormalizedAttribute()
     {
-        $quantities = quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
+        return Cache::rememberForever('om_tpn_' . $this->id, function () {
+            $quantities = quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
 
-        return quantitiesToTradingPrice($quantities[0], $quantities[1]);
+            return quantitiesToTradingPrice($quantities[0], $quantities[1]);
+        });
     }
 
     /**
