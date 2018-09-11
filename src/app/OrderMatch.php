@@ -80,7 +80,13 @@ class OrderMatch extends Model
     //     'backward_quantity_normalized',
     //     'forward_quantity_normalized',
     //     'trading_pair_normalized',
+    //     'trading_pair_base_asset',
+    //     'trading_pair_quote_asset',
     //     'trading_price_normalized',
+    //     'trading_total_normalized',
+    //     'trading_quantity_normalized',
+    //     'trading_buyer',
+    //     'trading_seller',
     // ];
 
     /**
@@ -108,6 +114,36 @@ class OrderMatch extends Model
     }
 
     /**
+     * Trading Base Asset
+     *
+     * @return string
+     */
+    public function getTradingBaseAssetAttribute()
+    {
+        return Cache::rememberForever('om_tba_' . $this->id, function () {
+            return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[0])
+                ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[0])
+                ->first()
+                ->display_name;
+        });
+    }
+
+    /**
+     * Trading Quote Asset
+     *
+     * @return string
+     */
+    public function getTradingQuoteAssetAttribute()
+    {
+        return Cache::rememberForever('om_tqa_' . $this->id, function () {
+            return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[1])
+                ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[1])
+                ->first()
+                ->display_name;
+        });
+    }
+
+    /**
      * Trading Pair Normalized
      *
      * @return string
@@ -124,6 +160,30 @@ class OrderMatch extends Model
     }
 
     /**
+     * Trading Quantity Normalized
+     *
+     * @return string
+     */
+    public function getTradingQuantityNormalizedAttribute()
+    {
+        return Cache::rememberForever('om_tqn_' . $this->id, function () {
+            return $this->base_asset === $this->backward_asset ? $this->backward_quantity_normalized : $this->forward_quantity_normalized;
+        });
+    }
+
+    /**
+     * Trading Total Normalized
+     *
+     * @return string
+     */
+    public function getTradingTotalNormalizedAttribute()
+    {
+        return Cache::rememberForever('om_ttn_' . $this->id, function () {
+            return $this->base_asset === $this->backward_asset ? $this->forward_quantity_normalized : $this->backward_quantity_normalized;
+        });
+    }
+
+    /**
      * Trading Price Normalized
      *
      * @return string
@@ -134,6 +194,30 @@ class OrderMatch extends Model
             $quantities = quantitiesInBaseQuoteOrder($this->backward_asset, $this->backward_quantity_normalized, $this->forward_asset, $this->forward_quantity_normalized);
 
             return quantitiesToTradingPrice($quantities[0], $quantities[1]);
+        });
+    }
+
+    /**
+     * Trading Buyer
+     *
+     * @return string
+     */
+    public function getTradingBuyerAttribute()
+    {
+        return Cache::rememberForever('om_tb_' . $this->id, function () {
+            return $this->base_asset === $this->backward_asset ? $this->tx0_address : $this->tx1_address;
+        });
+    }
+
+    /**
+     * Trading Seller
+     *
+     * @return string
+     */
+    public function getTradingSellerAttribute()
+    {
+        return Cache::rememberForever('om_ts_' . $this->id, function () {
+            return $this->base_asset === $this->backward_asset ? $this->tx1_address : $this->tx0_address;
         });
     }
 

@@ -81,7 +81,11 @@ class Order extends Model
     //     'give_quantity_normalized',
     //     'give_remaining_normalized',
     //     'trading_pair_normalized',
+    //     'trading_pair_base_asset',
+    //     'trading_pair_quote_asset',
     //     'trading_price_normalized',
+    //     'trading_total_normalized',
+    //     'trading_quantity_normalized',
     // ];
 
     /**
@@ -105,7 +109,9 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
+            return Cache::remember('o_gern_' . $this->id, 1, function () {
+                return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
+            });
         }
 
         return Cache::rememberForever('o_gern_' . $this->id, function () {
@@ -134,7 +140,9 @@ class Order extends Model
     {
         if($this->status === 'open')
         {
-            return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+            return Cache::remember('o_girn_' . $this->id, 1, function () {
+                return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+            });
         }
 
         return Cache::rememberForever('o_girn_' . $this->id, function () {
@@ -159,6 +167,36 @@ class Order extends Model
     }
 
     /**
+     * Trading Base Asset
+     *
+     * @return string
+     */
+    public function getTradingBaseAssetAttribute()
+    {
+        return Cache::rememberForever('o_tba_' . $this->id, function () {
+            return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[0])
+                ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[0])
+                ->first()
+                ->display_name;
+        });
+    }
+
+    /**
+     * Trading Quote Asset
+     *
+     * @return string
+     */
+    public function getTradingQuoteAssetAttribute()
+    {
+        return Cache::rememberForever('o_tqa_' . $this->id, function () {
+            return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[1])
+                ->orWhere('asset_longname', '=', explode('/', $this->trading_pair_normalized)[1])
+                ->first()
+                ->display_name;
+        });
+    }
+
+    /**
      * Trading Price Normalized
      *
      * @return string
@@ -169,6 +207,44 @@ class Order extends Model
             $quantities = quantitiesInBaseQuoteOrder($this->get_asset, $this->get_quantity_normalized, $this->give_asset, $this->give_quantity_normalized);
 
             return quantitiesToTradingPrice($quantities[0], $quantities[1]);
+        });
+    }
+
+    /**
+     * Trading Quantity Normalized
+     *
+     * @return string
+     */
+    public function getTradingQuantityNormalizedAttribute()
+    {
+        if($this->status === 'open')
+        {
+            return Cache::remember('o_tqn_' . $this->id, 1, function () {
+                return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
+            });
+        }
+
+        return Cache::rememberForever('o_tqn_' . $this->id, function () {
+            return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
+        });
+    }
+
+    /**
+     * Trading Total Normalized
+     *
+     * @return string
+     */
+    public function getTradingTotalNormalizedAttribute()
+    {
+        if($this->status === 'open')
+        {
+            return Cache::remember('o_ttn_' . $this->id, 1, function () {
+                return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
+            });
+        }
+
+        return Cache::rememberForever('o_ttn_' . $this->id, function () {
+            return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
         });
     }
 
