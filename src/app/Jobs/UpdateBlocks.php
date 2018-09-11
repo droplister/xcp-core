@@ -164,11 +164,6 @@ class UpdateBlocks implements ShouldQueue
      */
     private function saveMessages($messages, $block_time)
     {
-        // Sort so inserts are always before updates
-        usort($messages, function ($message1, $message2) {
-            return $message1['command'] <=> $message2['command'];
-        });
-
         // Each message
         foreach($messages as $message)
         {
