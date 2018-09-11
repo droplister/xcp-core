@@ -2,7 +2,7 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
-use Throwable;
+use Exception;
 use JsonRPC\Client;
 use Droplister\XcpCore\App\Block;
 use Illuminate\Bus\Queueable;
@@ -67,7 +67,7 @@ class UpdateBlock implements ShouldQueue
             // Update block
             $this->block->updateBlock($block_data);
         }
-        catch(Throwable $e)
+        catch(Exception $e)
         {
             // API Error
         }

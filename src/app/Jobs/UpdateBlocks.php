@@ -4,7 +4,7 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Carbon\Carbon;
 use JsonRPC\Client;
-use Artisan, DB, Log, Redis, Throwable;
+use Artisan, DB, Log, Redis, Exception;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Address;
 use Droplister\XcpCore\App\Message;
@@ -92,7 +92,7 @@ class UpdateBlocks implements ShouldQueue
             $blocks = $this->getBlocks();
 
             // API failed
-            if(! is_array($blocks)) throw new Throwable('API Failed');
+            if(! is_array($blocks)) throw new Exception('API Failed');
 
             // Each block
             foreach($blocks as $block_data)
@@ -107,7 +107,7 @@ class UpdateBlocks implements ShouldQueue
                 UpdateBalances::dispatch($block);                
             }
         }
-        catch(Throwable $e)
+        catch(Exception $e)
         {
             Log::error($e->getMessage());
         }
@@ -204,32 +204,21 @@ class UpdateBlocks implements ShouldQueue
      */
     private function executeCommand($message, $bindings)
     {
-        try
+        // Handle accordingly
+        if($message['command'] === 'insert')
         {
-            // Handle accordingly
-            if($message['command'] === 'insert')
-            {
-                // Insert
-                return $this->createEntry($message, $bindings);
-            }
-            elseif($message['command'] === 'update')
-            {
-                // Update
-                return $this->updateEntry($message, $bindings);
-            }
-            elseif($message['command'] === 'reorg')
-            {
-                // Reorgs
-                $this->handleReorg($message, $bindings);
-            }
+            // Insert
+            $this->createEntry($message, $bindings);
         }
-        catch(Throwable $e)
+        elseif($message['command'] === 'update')
         {
-            Log::error($e->getMessage());
+            // Update
+            $this->updateEntry($message, $bindings);
         }
-        finally
+        elseif($message['command'] === 'reorg')
         {
-            // Go back in time?
+            // Reorgs
+            $this->handleReorg($message, $bindings);
         }
     }
 
