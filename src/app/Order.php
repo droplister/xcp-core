@@ -103,7 +103,14 @@ class Order extends Model
      */
     public function getGetRemainingNormalizedAttribute()
     {
-        return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
+        if($this->status === 'open')
+        {
+            return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
+        }
+
+        return Cache::rememberForever('o_gern_' . $this->id, function () {
+            return normalizeQuantity($this->get_remaining, $this->getAssetModel->divisible);
+        });
     }
 
     /**
@@ -125,7 +132,14 @@ class Order extends Model
      */
     public function getGiveRemainingNormalizedAttribute()
     {
-        return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+        if($this->status === 'open')
+        {
+            return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+        }
+
+        return Cache::rememberForever('o_girn_' . $this->id, function () {
+            return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+        });
     }
 
     /**
