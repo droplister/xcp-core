@@ -91,6 +91,16 @@ class Block extends Model
     }
 
     /**
+     * Expirations
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expirations()
+    {
+        return $this->hasMany(Order::class, 'block_index', 'expire_index');
+    }
+
+    /**
      * Messages
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
