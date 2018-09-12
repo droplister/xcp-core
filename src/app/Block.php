@@ -81,6 +81,16 @@ class Block extends Model
     }
 
     /**
+     * Cancels
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cancels()
+    {
+        return $this->hasMany(Cancel::class, 'block_index', 'block_index');
+    }
+
+    /**
      * Messages
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -88,6 +98,26 @@ class Block extends Model
     public function messages()
     {
         return $this->hasMany(Message::class, 'block_index', 'block_index');
+    }
+
+    /**
+     * Orders
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'block_index', 'block_index');
+    }
+
+    /**
+     * Order Matches
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderMatches()
+    {
+        return $this->hasMany(OrderMatch::class, 'block_index', 'block_index');
     }
 
     /**
