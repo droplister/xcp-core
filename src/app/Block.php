@@ -97,7 +97,7 @@ class Block extends Model
      */
     public function expirations()
     {
-        return $this->hasMany(Order::class, 'block_index', 'expire_index');
+        return $this->hasMany(Order::class, 'expire_index', 'block_index');
     }
 
     /**
