@@ -167,7 +167,7 @@ class OrderMatch extends Model
     public function getTradingQuantityNormalizedAttribute()
     {
         return Cache::rememberForever('om_tqn_' . $this->id, function () {
-            return $this->base_asset === $this->backward_asset ? $this->backward_quantity_normalized : $this->forward_quantity_normalized;
+            return $this->trading_pair_base_asset === $this->backward_asset ? $this->backward_quantity_normalized : $this->forward_quantity_normalized;
         });
     }
 
@@ -179,7 +179,7 @@ class OrderMatch extends Model
     public function getTradingTotalNormalizedAttribute()
     {
         return Cache::rememberForever('om_ttn_' . $this->id, function () {
-            return $this->base_asset === $this->backward_asset ? $this->forward_quantity_normalized : $this->backward_quantity_normalized;
+            return $this->trading_pair_base_asset === $this->backward_asset ? $this->forward_quantity_normalized : $this->backward_quantity_normalized;
         });
     }
 

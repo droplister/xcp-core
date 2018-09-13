@@ -220,12 +220,12 @@ class Order extends Model
         if($this->status === 'open')
         {
             return Cache::remember('o_tqn_' . $this->tx_index, 1, function () {
-                return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
+                return $this->trading_pair_base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
             });
         }
 
         return Cache::rememberForever('o_tqn_' . $this->tx_index, function () {
-            return $this->base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
+            return $this->trading_pair_base_asset === $this->get_asset ? $this->get_remaining_normalized : $this->give_remaining_normalized;
         });
     }
 
@@ -239,12 +239,12 @@ class Order extends Model
         if($this->status === 'open')
         {
             return Cache::remember('o_ttn_' . $this->tx_index, 1, function () {
-                return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
+                return $this->trading_pair_base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
             });
         }
 
         return Cache::rememberForever('o_ttn_' . $this->tx_index, function () {
-            return $this->base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
+            return $this->trading_pair_base_asset === $this->get_asset ? $this->give_remaining_normalized : $this->get_remaining_normalized;
         });
     }
 
