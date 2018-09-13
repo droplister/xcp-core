@@ -3,6 +3,7 @@
 namespace Droplister\XcpCore\App\Jobs;
 
 use JsonRPC\Client;
+use Log, Exception;
 use Droplister\XcpCore\App\Mempool;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -50,18 +51,25 @@ class UpdateMempool implements ShouldQueue
      */
     public function handle()
     {
-        // Get mempool
-        $mempool = $this->getMempool();
-
-        // Returned as messages
-        foreach($mempool as $message)
+        try
         {
-            // Limit to inserts
-            if($message['command'] === 'insert')
+            // Get mempool
+            $mempool = $this->getMempool();
+
+            // Returned as messages
+            foreach($mempool as $message)
             {
-                // Save mempool tx
-                Mempool::firstOrCreate($message);
+                // Limit to inserts
+                if($message['command'] === 'insert')
+                {
+                    // Save mempool tx
+                    Mempool::firstOrCreate($message);
+                }
             }
+        }
+        catch(Exception $e)
+        {
+            Log::error($e->getMessage());
         }
     }
 
