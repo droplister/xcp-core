@@ -80,6 +80,7 @@ class Order extends Model
     //     'get_remaining_normalized',
     //     'give_quantity_normalized',
     //     'give_remaining_normalized',
+    //     'trading_type',
     //     'trading_pair_normalized',
     //     'trading_pair_base_asset',
     //     'trading_pair_quote_asset',
@@ -147,6 +148,18 @@ class Order extends Model
 
         return Cache::rememberForever('o_girn_' . $this->tx_index, function () {
             return normalizeQuantity($this->give_remaining, $this->giveAssetModel->divisible);
+        });
+    }
+
+    /**
+     * Trading Type
+     *
+     * @return string
+     */
+    public function getTradingTypeAttribute()
+    {
+        return Cache::rememberForever('o_tt_' . $this->tx_index, function () {
+            return $this->getAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell'
         });
     }
 

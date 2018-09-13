@@ -79,6 +79,7 @@ class OrderMatch extends Model
     // protected $appends = [
     //     'backward_quantity_normalized',
     //     'forward_quantity_normalized',
+    //     'trading_type',
     //     'trading_pair_normalized',
     //     'trading_pair_base_asset',
     //     'trading_pair_quote_asset',
@@ -110,6 +111,18 @@ class OrderMatch extends Model
     {
         return Cache::rememberForever('om_fqn_' . $this->id, function () {
             return normalizeQuantity($this->forward_quantity, $this->forwardAssetModel->divisible);
+        });
+    }
+
+    /**
+     * Trading Type
+     *
+     * @return string
+     */
+    public function getTradingTypeAttribute()
+    {
+        return Cache::rememberForever('om_tt_' . $this->id, function () {
+            return $this->backwardAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell'
         });
     }
 
