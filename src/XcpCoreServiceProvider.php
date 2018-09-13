@@ -59,6 +59,7 @@ class XcpCoreServiceProvider extends ServiceProvider
             $this->commands([
                 App\Console\Commands\UpdateBlocksCommand::class,
                 App\Console\Commands\UpdateIndexCommand::class,
+                App\Console\Commands\UpdateMempooolCommand::class,
                 App\Console\Commands\UpdateSupplyCommand::class,
             ]);
         }
