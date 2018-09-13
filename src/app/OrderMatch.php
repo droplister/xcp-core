@@ -205,7 +205,7 @@ class OrderMatch extends Model
     public function getTradingBuyerNormalizedAttribute()
     {
         return Cache::rememberForever('om_tb_' . $this->id, function () {
-            return $this->base_asset === $this->backward_asset ? $this->tx0_address : $this->tx1_address;
+            return $this->trading_pair_base_asset === $this->backward_asset ? $this->tx0_address : $this->tx1_address;
         });
     }
 
@@ -217,7 +217,7 @@ class OrderMatch extends Model
     public function getTradingSellerNormalizedAttribute()
     {
         return Cache::rememberForever('om_ts_' . $this->id, function () {
-            return $this->base_asset === $this->backward_asset ? $this->tx1_address : $this->tx0_address;
+            return $this->trading_pair_base_asset === $this->backward_asset ? $this->tx1_address : $this->tx0_address;
         });
     }
 
