@@ -171,7 +171,7 @@ class Order extends Model
      *
      * @return string
      */
-    public function getTradingBaseAssetAttribute()
+    public function getTradingPairBaseAssetAttribute()
     {
         return Cache::rememberForever('o_tba_' . $this->tx_index, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[0])
@@ -186,7 +186,7 @@ class Order extends Model
      *
      * @return string
      */
-    public function getTradingQuoteAssetAttribute()
+    public function getTradingPairQuoteAssetAttribute()
     {
         return Cache::rememberForever('o_tqa_' . $this->tx_index, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[1])

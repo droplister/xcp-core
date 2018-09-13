@@ -118,7 +118,7 @@ class OrderMatch extends Model
      *
      * @return string
      */
-    public function getTradingBaseAssetAttribute()
+    public function getTradingPairBaseAssetAttribute()
     {
         return Cache::rememberForever('om_tba_' . $this->id, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[0])
@@ -133,7 +133,7 @@ class OrderMatch extends Model
      *
      * @return string
      */
-    public function getTradingQuoteAssetAttribute()
+    public function getTradingPairQuoteAssetAttribute()
     {
         return Cache::rememberForever('om_tqa_' . $this->id, function () {
             return Asset::where('asset_name', '=', explode('/', $this->trading_pair_normalized)[1])
