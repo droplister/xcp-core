@@ -122,7 +122,7 @@ class OrderMatch extends Model
     public function getTradingTypeAttribute()
     {
         return Cache::rememberForever('om_tt_' . $this->id, function () {
-            return $this->backwardAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell'
+            return $this->backwardAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell';
         });
     }
 

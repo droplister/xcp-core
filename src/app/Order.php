@@ -159,7 +159,7 @@ class Order extends Model
     public function getTradingTypeAttribute()
     {
         return Cache::rememberForever('o_tt_' . $this->tx_index, function () {
-            return $this->getAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell'
+            return $this->getAssetModel->display_name === $this->trading_pair_base_asset ? 'Buy' : 'Sell';
         });
     }
 
