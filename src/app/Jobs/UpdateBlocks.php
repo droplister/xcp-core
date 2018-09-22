@@ -4,14 +4,14 @@ namespace Droplister\XcpCore\App\Jobs;
 
 use Carbon\Carbon;
 use JsonRPC\Client;
-use Artisan, DB, Log, Redis, Exception;
+use Artisan, Log, Exception;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Address;
 use Droplister\XcpCore\App\Message;
-use Droplister\XcpCore\App\Rollback;
 use Droplister\XcpCore\App\Transaction;
 use Droplister\XcpCore\App\Jobs\UpdateBlock;
 use Droplister\XcpCore\App\Jobs\UpdateBalances;
+use Droplister\XcpCore\App\Jobs\HandleRollback;
 use Droplister\XcpCore\App\Jobs\UpdateTransaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -336,106 +336,7 @@ class UpdateBlocks implements ShouldQueue
      */
     private function handleReorg($message, $bindings)
     {
-        // Record the rollback
-        $rollback = $this->createRollback($message, $bindings);
-
-        // Rollback activated
-        if($rollback->wasRecentlyCreated)
-        {
-            // Clear jobs in the queue
-            Redis::connection()->del('queues:default');
-
-            // UpdateBalances requires Block instance
-            $block = Block::find($bindings['block_index']);
-
-            // Rollback balance first
-            UpdateBalances::dispatchNow($block, true);
-
-            // Rollback to block index
-            $this->rollbackDatabase($rollback, $bindings['block_index']);
-        }
-    }
-
-    /**
-     * First or create Rollback.
-     *
-     * @param  array  $message
-     * @param  array  $bindings
-     * @return \Droplister\XcpCore\App\Rollback
-     */
-    private function createRollback($message, $bindings)
-    {
-        return Rollback::firstOrCreate([
-          'message_index' => $message['message_index'],
-          'block_index' => $bindings['block_index'],
-        ]);
-    }
-
-    /**
-     * Rollback database.
-     *
-     * @param  \Droplister\XcpCore\App\Rollback  $rollback
-     * @param  integer  $block_index
-     * @return void
-     */
-    private function rollbackDatabase($rollback, $block_index)
-    {
-        DB::transaction(function () use ($rollback, $block_index)
-        {
-            // Tables to rollback
-            $tables = $this->rollbackTables();
-
-            // Delete rows after reorg block
-            foreach($tables as $table)
-            {
-                DB::table($table)->where('block_index', '>', $block_index)->delete();
-            }
-
-            // Deactivate
-            $rollback->update([
-                'processed_at' => Carbon::now()
-            ]);
-        });
-    }
-
-    /**
-     * Rollback Tables
-     * 
-     * @return array
-     */
-    private function rollbackTables()
-    {
-        return [
-            'blocks',
-            'messages',
-            'transactions',
-            'addresses',
-            'assets',
-            'bet_expirations',
-            'bet_match_expirations',
-            'bet_match_resolutions',
-            'bet_matches',
-            'bets',
-            'broadcasts',
-            'btcpays',
-            'burns',
-            'cancels',
-            'credits',
-            'debits',
-            'destructions',
-            'dividends',
-            'issuances',
-            'order_expirations',
-            'order_match_expirations',
-            'order_matches',
-            'orders',
-            'replaces',
-            'rps',
-            'rps_expirations',
-            'rps_match_expirations',
-            'rpsresolves',
-            'sends',
-        ];
+        HandleRollback::dispatchNow($message, $bindings);
     }
 
     /**
