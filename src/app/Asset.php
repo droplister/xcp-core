@@ -323,7 +323,7 @@ class Asset extends Model
         $asset = static::whereAssetName($issuance->asset)->firstOrFail(); // Should not fail
 
         // Total Issuance
-        $total_issuance = $asset->issuance + $issuance->quantity;
+        $total_issuance = $asset->issuances()->sum('quantity');
         if($total_issuance > 9223372036854775808) $total_issuance = 9223372036854775808;
 
         // Asset Is Locked
