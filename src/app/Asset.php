@@ -322,6 +322,13 @@ class Asset extends Model
         // Get Asset By Name From Issuance
         $asset = static::whereAssetName($issuance->asset)->firstOrFail(); // Should not fail
 
+        // Total Issuance
+        $total_issuance = $asset->issuance + $issuance->quantity;
+        if($total_issuance > 9223372036854775808) $total_issuance = 9223372036854775808;
+
+        // Asset Is Locked
+        $locked = ! $asset->locked && $issuance->locked ? 1 : $asset->locked
+
         // Check If Issuance Is A Creation
         if($asset->tx_index !== $issuance->tx_index)
         {
@@ -329,8 +336,8 @@ class Asset extends Model
             $asset->update([
                 'owner' => $issuance->issuer,
                 'description' => $issuance->description,
-                'issuance' => $asset->issuance + $issuance->quantity,
-                'locked' => ! $asset->locked && $issuance->locked ? 1 : $asset->locked,
+                'issuance' => $total_issuance,
+                'locked' => $locked,
             ]);
         }
     }
