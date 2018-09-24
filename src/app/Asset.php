@@ -327,7 +327,7 @@ class Asset extends Model
         if($total_issuance > 9223372036854775808) $total_issuance = 9223372036854775808;
 
         // Asset Is Locked
-        $locked = ! $asset->locked && $issuance->locked ? 1 : $asset->locked
+        $locked = ! $asset->locked && $issuance->locked ? 1 : $asset->locked;
 
         // Check If Issuance Is A Creation
         if($asset->tx_index !== $issuance->tx_index)
