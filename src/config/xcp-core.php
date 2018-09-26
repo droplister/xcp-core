@@ -71,5 +71,7 @@ return [
         'RUSTBITS',
         'WILLCOIN',
         'XFCCOIN',
+        'SOVEREIGNC',
+        'OLINCOIN'
     ],
 ];
