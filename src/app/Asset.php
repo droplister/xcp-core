@@ -2,6 +2,7 @@
 
 namespace Droplister\XcpCore\App;
 
+use Cache;
 use Droplister\XcpCore\App\Debit;
 use Droplister\XcpCore\App\Issuance;
 use Droplister\XcpCore\App\Events\AssetWasCreated;
