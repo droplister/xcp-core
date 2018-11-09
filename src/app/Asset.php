@@ -111,19 +111,21 @@ class Asset extends Model
      */
     public function getBurnedAttribute()
     {
-        // Burned Quantity
-        $burned = $this->balances()->whereHas('addressModel', function ($address) {
-            $address->where('burn', '=', 1);
-        })->sum('quantity');
+        return Cache::remember('a_b_' . $this->id, 1440, function () {
+            // Burned Quantity
+            $burned = $this->balances()->whereHas('addressModel', function ($address) {
+                $address->where('burn', '=', 1);
+            })->sum('quantity');
 
-        // XCP Gas Fees
-        if($this->asset_name === 'XCP')
-        {
-            $gas_fees = Debit::where('action', 'like', '% fee')->sum('quantity');
-            $burned = $burned + $gas_fees;
-        }
+            // XCP Gas Fees
+            if($this->asset_name === 'XCP')
+            {
+                $gas_fees = Debit::where('action', 'like', '% fee')->sum('quantity');
+                $burned = $burned + $gas_fees;
+            }
 
-        return $burned;
+            return $burned;
+        });
     }
 
     /**
