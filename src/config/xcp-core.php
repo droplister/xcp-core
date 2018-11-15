@@ -72,6 +72,7 @@ return [
         'WILLCOIN',
         'XFCCOIN',
         'SOVEREIGNC',
-        'OLINCOIN'
+        'OLINCOIN',
+        'BITROCK'
     ],
 ];
