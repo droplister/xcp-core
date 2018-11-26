@@ -112,7 +112,7 @@ class Asset extends Model
      */
     public function getBurnedAttribute()
     {
-        return Cache::remember('a_b_' . $this->id, 1440, function () {
+        return Cache::remember('a_b_' . $this->asset_name, 1440, function () {
             // Burned Quantity
             $burned = $this->balances()->whereHas('addressModel', function ($address) {
                 $address->where('burn', '=', 1);
