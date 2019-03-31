@@ -5,6 +5,7 @@ namespace Droplister\XcpCore\App\Console\Commands;
 use Cache;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Rollback;
+use Droplister\XcpCore\App\Jobs\UpdateBlock;
 use Droplister\XcpCore\App\Jobs\UpdateBlocks;
 use Illuminate\Console\Command;
 
@@ -118,7 +119,7 @@ class UpdateBlocksCommand extends Command
     private function selectAndUpdateOldBlocks()
     {
         // Requires Bitcoin Core API
-        if(config('xcp-core.bc.api'))
+        if(config('xcp-core.advanced') && config('xcp-core.bc.api'))
         {
             // Get blocks w/o hashes
             $blocks = Block::whereNull('next_block_hash')->get();
