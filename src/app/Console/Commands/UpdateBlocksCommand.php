@@ -95,7 +95,7 @@ class UpdateBlocksCommand extends Command
         $minimum_sync = config('xcp-core.sync_size');
 
         // Update blocks
-        if($global_index - $local_index < $minimum_sync)
+        if($global_index - $local_index <= $minimum_sync)
         {
             // Regular update
             $last_index = $global_index;
