@@ -180,6 +180,8 @@ function getLookupArrayFoC($message, $bindings)
         'burns',
         'cancels',
         'destructions',
+        'dispensers',
+        'dispenses',
         'dividends',
         'issuances',
         'orders',
@@ -237,7 +239,7 @@ function getLookupArrayFoC($message, $bindings)
 function getLookupArrayUoC($message, $bindings)
 {
     // Symmetric Keys
-    if($message['category'] === 'bets' || $message['category'] === 'orders')
+    if(in_array($message['catgory'], ['bets', 'dispensers', 'orders']))
     {
         $model_key = $bindings_key = 'tx_hash';
     }
