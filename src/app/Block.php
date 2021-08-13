@@ -161,6 +161,16 @@ class Block extends Model
     }
 
     /**
+     * Sweeps
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sweeps()
+    {
+        return $this->hasMany(Sweep::class, 'block_index', 'block_index');
+    }
+
+    /**
      * Transactions
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

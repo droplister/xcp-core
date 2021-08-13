@@ -197,6 +197,26 @@ class Address extends Model
     }
 
     /**
+     * Swepts
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function swetps()
+    {
+        return $this->hasMany(Sweep::class, 'source');
+    }
+
+    /**
+     * Sweeps
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sweeps()
+    {
+        return $this->hasMany(Sweep::class, 'destination');
+    }
+
+    /**
      * Transactions
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

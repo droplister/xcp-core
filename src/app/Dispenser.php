@@ -62,6 +62,7 @@ class Dispenser extends Model
     //     'give_remaining_normalized',
     //     'escrow_quantity_normalized',
     //     'trading_price_normalized',
+    //     'status_label',
     // ];
 
     /**
@@ -117,6 +118,23 @@ class Dispenser extends Model
         return Cache::rememberForever('d_tpn_' . $this->tx_index, function () {
             return normalizeQuantity($this->satoshirate, true);
         });
+    }
+
+    /**
+     * Status Label
+     *
+     * @return string
+     */
+    public function getStatusLabelAttribute()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'open';
+            case 1:
+                return 'open (empty)';
+            case 10:
+                return 'closed';
+        }
     }
 
     /**
