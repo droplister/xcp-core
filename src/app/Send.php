@@ -37,6 +37,7 @@ class Send extends Model
      * @var array
      */
     protected $fillable = [
+        'msg_index',
         'block_index',
         'tx_index',
         'tx_hash',
