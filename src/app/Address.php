@@ -127,6 +127,36 @@ class Address extends Model
     }
 
     /**
+     * Dispensers
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispensers()
+    {
+        return $this->hasMany(Dispenser::class, 'source');
+    }
+
+    /**
+     * Dispenses
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispenses()
+    {
+        return $this->hasMany(Dispense::class, 'destination');
+    }
+
+    /**
+     * Balances
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function balances()
+    {
+        return $this->hasMany(Balance::class, 'address');
+    }
+
+    /**
      * Dividends
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
