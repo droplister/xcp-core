@@ -24,7 +24,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Droplister\\XcpCore\\XcpCoreServiceProvider"
+        "Droplister\\XcpCore\\App\\XcpCoreServiceProvider"
       ]
     }
   },

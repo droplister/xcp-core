@@ -1,6 +1,6 @@
 <?php
 
-namespace Droplister\XcpCore;
+namespace Droplister\XcpCore\App;
 
 use Event;
 use Droplister\XcpCore\App\Events\AssetWasUpdated;
