@@ -18,13 +18,13 @@
       "src/utilities.php"
     ],
     "psr-4": {
-      "Droplister\\XcpCore\\App\\": "src/app/"
+      "Droplister\\XcpCore\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Droplister\\XcpCore\\App\\XcpCoreServiceProvider"
+        "Droplister\\XcpCore\\XcpCoreServiceProvider"
       ]
     }
   },
