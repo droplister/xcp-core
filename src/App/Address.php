@@ -147,16 +147,6 @@ class Address extends Model
     }
 
     /**
-     * Balances
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function balances()
-    {
-        return $this->hasMany(Balance::class, 'address');
-    }
-
-    /**
      * Dividends
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
