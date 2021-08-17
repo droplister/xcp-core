@@ -191,7 +191,7 @@ class Address extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function swetps()
+    public function swepts()
     {
         return $this->hasMany(Sweep::class, 'source');
     }
