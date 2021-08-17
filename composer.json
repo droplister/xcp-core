@@ -18,7 +18,7 @@
       "src/utilities.php"
     ],
     "psr-4": {
-      "Droplister\\XcpCore\\App": "src/app/"
+      "Droplister\\XcpCore\\App\\": "src/app/"
     }
   },
   "extra": {
