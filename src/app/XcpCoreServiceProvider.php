@@ -57,10 +57,10 @@ class XcpCoreServiceProvider extends ServiceProvider
         if($this->app->runningInConsole())
         {
             $this->commands([
-                App\Console\Commands\UpdateBlocksCommand::class,
-                App\Console\Commands\UpdateIndexCommand::class,
-                App\Console\Commands\UpdateMempoolCommand::class,
-                App\Console\Commands\UpdateSupplyCommand::class,
+                Console\Commands\UpdateBlocksCommand::class,
+                Console\Commands\UpdateIndexCommand::class,
+                Console\Commands\UpdateMempoolCommand::class,
+                Console\Commands\UpdateSupplyCommand::class,
             ]);
         }
     }
