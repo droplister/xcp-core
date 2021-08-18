@@ -2,7 +2,7 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
-use DB;
+use DB, Log;
 use Carbon\Carbon;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Rollback;
@@ -66,20 +66,30 @@ class HandleRollback implements ShouldQueue
         // Record the rollback
         $rollback = $this->createRollback();
 
+        Log::info('Rollback #'. $rollback->id);
+
         // Rollback activated
         if($rollback->wasRecentlyCreated)
         {
             // Clear jobs in the queue
             Redis::connection()->del('queues:default');
 
+            Log::info('Queue Cleared');
+
             // UpdateBalances requires Block instance
             $block = Block::find($this->bindings['block_index']);
+
+            Log::info('Block #' . $block->block_index);
 
             // Rollback balance first
             UpdateBalances::dispatchNow($block, true);
 
+            Log::info('Balances Update');
+
             // Rollback to block index
             $this->rollbackDatabase($rollback);
+
+            Log::info('Database Fixed');
         }
     }
 
