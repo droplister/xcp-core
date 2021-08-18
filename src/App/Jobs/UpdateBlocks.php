@@ -199,21 +199,25 @@ class UpdateBlocks implements ShouldQueue
      */
     private function executeCommand($message, $bindings)
     {
-        // Handle accordingly
-        if($message['command'] === 'insert')
-        {
-            // Insert
-            $this->createEntry($message, $bindings);
-        }
-        elseif($message['command'] === 'update')
-        {
-            // Update
-            $this->updateEntry($message, $bindings);
-        }
-        elseif($message['command'] === 'reorg')
-        {
-            // Reorgs
-            $this->handleReorg($message, $bindings);
+        try {
+            // Handle accordingly
+            if($message['command'] === 'insert')
+            {
+                // Insert
+                $this->createEntry($message, $bindings);
+            }
+            elseif($message['command'] === 'update')
+            {
+                // Update
+                $this->updateEntry($message, $bindings);
+            }
+            elseif($message['command'] === 'reorg')
+            {
+                // Reorgs
+                $this->handleReorg($message, $bindings);
+            }
+        } catch (\Exception $e) {
+            Log::info($message['block_index'] . ' ' . $message['message_index'] . ' ' . $message['command'] . ' ' . $message['category']);
         }
     }
 
@@ -323,15 +327,8 @@ class UpdateBlocks implements ShouldQueue
         // Get an array to use for updateOrCreate
         $lookup = getLookupArrayUoC($message, $bindings);
 
-        if($message['category'] === 'order_matches' && $message['command'] === 'update' && $bindings['status'] === 'expired') {
-            // Update entry
-            return OrderMatchExpiration::where($lookup)->update($bindings);
-
-        } else {
-            // Update entry
-            return $model_name::updateOrCreate($lookup, $bindings);
-        }
-
+        // Update entry
+        return $model_name::updateOrCreate($lookup, $bindings);
     }
 
     /**
