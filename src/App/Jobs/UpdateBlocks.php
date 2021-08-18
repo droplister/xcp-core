@@ -323,8 +323,15 @@ class UpdateBlocks implements ShouldQueue
         // Get an array to use for updateOrCreate
         $lookup = getLookupArrayUoC($message, $bindings);
 
-        // Update entry
-        return $model_name::updateOrCreate($lookup, $bindings);
+        if($message['category'] === 'order_matches' && $message['command'] === 'update' && $bindings['status'] === 'expired') {
+            // Update entry
+            return OrderMatchExpiration::where($lookup)->update($bindings);
+
+        } else {
+            // Update entry
+            return $model_name::updateOrCreate($lookup, $bindings);
+        }
+
     }
 
     /**
