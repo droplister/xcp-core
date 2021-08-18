@@ -2,11 +2,12 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
-use DB, Redis;
+use DB;
 use Carbon\Carbon;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Rollback;
 use Droplister\XcpCore\App\Jobs\UpdateBalances;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -146,6 +147,8 @@ class HandleRollback implements ShouldQueue
             'credits',
             'debits',
             'destructions',
+            'dispensers',
+            'dispenses',
             'dividends',
             'issuances',
             'order_expirations',
@@ -158,6 +161,7 @@ class HandleRollback implements ShouldQueue
             'rps_match_expirations',
             'rpsresolves',
             'sends',
+            'sweeps',
         ];
     }
 }
