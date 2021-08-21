@@ -82,7 +82,7 @@ class Sweep extends Model
                 return 'ownership';
             case 4:
                 return 'binary_memo';
-            else:
+            default:
                 return 'all';
         }
     }
