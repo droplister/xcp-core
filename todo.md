@@ -1,3 +1,8 @@
+Dispenser: 600773
+Multisend: 616614
+Ad Sweeps: 621941
+
+
 Create command to populate full data for these dispensers
 
 [2021-08-21 07:45:41] local.INFO: 600888 5505780 update dispensers  
