@@ -47,6 +47,16 @@ class Sweep extends Model
         'status',
         'memo',
         'fee_paid',
+        'confirmed_at',
+    ];
+
+    /**
+     * The attributes that are dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'confirmed_at',
     ];
 
     /**
