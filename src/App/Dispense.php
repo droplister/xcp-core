@@ -47,6 +47,16 @@ class Dispense extends Model
         'asset',
         'dispense_quantity',
         'dispenser_tx_hash',
+        'confirmed_at',
+    ];
+
+    /**
+     * The attributes that are dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'confirmed_at',
     ];
 
     /**

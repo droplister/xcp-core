@@ -25,6 +25,8 @@ class CreateDispensersTable extends Migration
             $table->bigInteger('escrow_quantity');
             $table->unsignedBigInteger('satoshirate');
             $table->unsignedInteger('status')->index();
+            $table->timestamp('confirmed_at')->nullable()->index();
+            $table->timestamps();
             // Indexes
             $table->primary('tx_index');
             $table->index(['tx_index', 'tx_hash']);

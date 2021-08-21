@@ -24,6 +24,8 @@ class CreateDispensesTable extends Migration
             $table->string('asset')->index();
             $table->unsignedBigInteger('dispense_quantity');
             $table->string('dispenser_tx_hash');
+            $table->timestamp('confirmed_at')->nullable()->index();
+            $table->timestamps();
             // Indexes
             $table->primary('tx_index');
             $table->index(['tx_index', 'dispense_index', 'source', 'destination']);

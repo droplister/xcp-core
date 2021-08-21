@@ -50,6 +50,16 @@ class Dispenser extends Model
         'escrow_quantity',
         'satoshirate',
         'status',
+        'confirmed_at',
+    ];
+
+    /**
+     * The attributes that are dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'confirmed_at',
     ];
 
     /**

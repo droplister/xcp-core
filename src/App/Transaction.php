@@ -167,7 +167,7 @@ class Transaction extends Model
             'tx_hash' => $bindings['tx_hash'],
             'block_index' => $bindings['block_index'],
             'destination' => isset($bindings['destination']) ? $bindings['destination'] : null,
-            'valid' => strpos($bindings['status'], 'invalid') === false ? 1 : 0,
+            'valid' => isset($bindings['status']) && strpos($bindings['status'], 'invalid') === false || $message['category'] === 'dispenses' ? 1 : 0,
             'timestamp' => $message['timestamp'],
             'confirmed_at' => $bindings['confirmed_at'],
         ]);
