@@ -269,6 +269,16 @@ function getLookupArrayUoC($message, $bindings)
         $model_key = $bindings_key = 'tx_hash';
     }
 
+    // Dispensers (*)
+    if($message['category'] === 'dispensers' && ! isset($bindings[$bindings_key]))
+    {
+        return [
+            'asset' => $bindings['asset'],
+            'source' => $bindings['source'],
+            'status' => 0
+        ];
+    }
+
     // Lookup: [key => value]
     return [
         $model_key => $bindings[$bindings_key]
