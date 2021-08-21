@@ -72,7 +72,7 @@ class HandleRollback implements ShouldQueue
         if($rollback->wasRecentlyCreated)
         {
             // Clear jobs in the queue
-            Redis::connection()->del('queues:default');
+            Redis::command('flushdb');
 
             Log::info('Queue Cleared');
 
