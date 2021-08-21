@@ -218,6 +218,7 @@ class UpdateBlocks implements ShouldQueue
             }
         } catch (\Exception $e) {
             Log::info($message['block_index'] . ' ' . $message['message_index'] . ' ' . $message['command'] . ' ' . $message['category']);
+            Log::info($e->getMessage());
         }
     }
 
