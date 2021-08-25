@@ -81,6 +81,16 @@ class Dispense extends Model
     }
 
     /**
+     * Dispenser
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function dispenser()
+    {
+        return $this->belongsTo(Dispenser::class, 'dispenser_tx_hash', 'tx_hash');
+    }
+
+    /**
      * Give Asset
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
