@@ -210,6 +210,26 @@ class Asset extends Model
     }
 
     /**
+     * Dispensers
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispensers()
+    {
+        return $this->hasMany(Dispenser::class, 'asset', 'asset_name');
+    }
+
+    /**
+     * Dispenses
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispenses()
+    {
+        return $this->hasMany(Dispense::class, 'asset', 'asset_name');
+    }
+
+    /**
      * Dividends
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

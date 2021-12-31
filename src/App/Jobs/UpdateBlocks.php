@@ -199,21 +199,26 @@ class UpdateBlocks implements ShouldQueue
      */
     private function executeCommand($message, $bindings)
     {
-        // Handle accordingly
-        if($message['command'] === 'insert')
-        {
-            // Insert
-            $this->createEntry($message, $bindings);
-        }
-        elseif($message['command'] === 'update')
-        {
-            // Update
-            $this->updateEntry($message, $bindings);
-        }
-        elseif($message['command'] === 'reorg')
-        {
-            // Reorgs
-            $this->handleReorg($message, $bindings);
+        try {
+            // Handle accordingly
+            if($message['command'] === 'insert')
+            {
+                // Insert
+                $this->createEntry($message, $bindings);
+            }
+            elseif($message['command'] === 'update')
+            {
+                // Update
+                $this->updateEntry($message, $bindings);
+            }
+            elseif($message['command'] === 'reorg')
+            {
+                // Reorgs
+                $this->handleReorg($message, $bindings);
+            }
+        } catch (\Exception $e) {
+            Log::info($message['block_index'] . ' ' . $message['message_index'] . ' ' . $message['command'] . ' ' . $message['category']);
+            Log::info($e->getMessage());
         }
     }
 

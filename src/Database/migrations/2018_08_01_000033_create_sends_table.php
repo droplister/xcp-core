@@ -15,6 +15,7 @@ class CreateSendsTable extends Migration
     {
         Schema::create('sends', function (Blueprint $table) {
             // Columns
+            $table->unsignedInteger('msg_index')->default(0);
             $table->unsignedInteger('tx_index')->unique();
             $table->unsignedInteger('block_index')->index();
             $table->string('tx_hash')->unique();

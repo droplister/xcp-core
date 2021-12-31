@@ -91,6 +91,26 @@ class Block extends Model
     }
 
     /**
+     * Dispensers
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispensers()
+    {
+        return $this->hasMany(Dispenser::class, 'block_index', 'block_index');
+    }
+
+    /**
+     * Dispenses
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dispenses()
+    {
+        return $this->hasMany(Dispense::class, 'block_index', 'block_index');
+    }
+
+    /**
      * Expirations
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -138,6 +158,16 @@ class Block extends Model
     public function sends()
     {
         return $this->hasMany(Send::class, 'block_index', 'block_index');
+    }
+
+    /**
+     * Sweeps
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sweeps()
+    {
+        return $this->hasMany(Sweep::class, 'block_index', 'block_index');
     }
 
     /**

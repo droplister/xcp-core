@@ -180,6 +180,8 @@ function getLookupArrayFoC($message, $bindings)
         'burns',
         'cancels',
         'destructions',
+        'dispensers',
+        'dispenses',
         'dividends',
         'issuances',
         'orders',
@@ -237,7 +239,7 @@ function getLookupArrayFoC($message, $bindings)
 function getLookupArrayUoC($message, $bindings)
 {
     // Symmetric Keys
-    if($message['category'] === 'bets' || $message['category'] === 'orders')
+    if(in_array($message['category'], ['bets', 'dispensers', 'orders']))
     {
         $model_key = $bindings_key = 'tx_hash';
     }
@@ -265,6 +267,16 @@ function getLookupArrayUoC($message, $bindings)
     {
         // RPS seems to use tx_index OR tx_hash
         $model_key = $bindings_key = 'tx_hash';
+    }
+
+    // Dispensers (*)
+    if($message['category'] === 'dispensers' && ! isset($bindings[$bindings_key]))
+    {
+        return [
+            'asset' => $bindings['asset'],
+            'source' => $bindings['source'],
+            'status' => 0
+        ];
     }
 
     // Lookup: [key => value]

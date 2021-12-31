@@ -2,11 +2,12 @@
 
 namespace Droplister\XcpCore\App;
 
-use Droplister\XcpCore\App\Events\SendWasCreated;
+use Cache;
+use Droplister\XcpCore\App\Events\DispenseWasCreated;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Send extends Model
+class Dispense extends Model
 {
     /**
      * Primary Key
@@ -28,7 +29,7 @@ class Send extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'created' => SendWasCreated::class,
+        'created' => DispenseWasCreated::class,
     ];
 
     /**
@@ -37,15 +38,15 @@ class Send extends Model
      * @var array
      */
     protected $fillable = [
-        'block_index',
         'tx_index',
+        'block_index',
         'tx_hash',
-        'status',
+        'dispense_index',
         'source',
         'destination',
         'asset',
-        'quantity',
-        'memo',
+        'dispense_quantity',
+        'dispenser_tx_hash',
         'confirmed_at',
     ];
 
@@ -64,56 +65,38 @@ class Send extends Model
      * @var array
      */
     // protected $appends = [
-    //     'quantity_normalized',
+    //     'dispense_quantity_normalized',
     // ];
 
     /**
-     * Quantity Normalized
+     * Dispense Quantity Normalized
      *
      * @return string
      */
-    public function getQuantityNormalizedAttribute()
+    public function getDispenseQuantityNormalizedAttribute()
     {
-        return normalizeQuantity($this->quantity, $this->assetModel->divisible);
+        return Cache::rememberForever('d_dqn_' . $this->tx_index, function () {
+            return normalizeQuantity($this->dispense_quantity, $this->giveAssetModel->divisible);
+        });
     }
 
     /**
-     * Destination Address
+     * Dispenser
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function destinationAddress()
+    public function dispenser()
     {
-        return $this->belongsTo(Address::class, 'destination', 'address');
+        return $this->belongsTo(Dispenser::class, 'dispenser_tx_hash', 'tx_hash');
     }
 
     /**
-     * Source Address
+     * Give Asset
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sourceAddress()
-    {
-        return $this->belongsTo(Address::class, 'source', 'address');
-    }
-
-    /**
-     * Asset
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function assetModel()
+    public function giveAssetModel()
     {
         return $this->belongsTo(Asset::class, 'asset', 'asset_name');
-    }
-
-    /**
-     * Transaction
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function transaction()
-    {
-        return $this->belongsTo(Transaction::class, 'tx_hash', 'tx_hash');
     }
 }

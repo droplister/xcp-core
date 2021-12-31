@@ -2,11 +2,12 @@
 
 namespace Droplister\XcpCore\App\Jobs;
 
-use DB, Redis;
+use DB, Log;
 use Carbon\Carbon;
 use Droplister\XcpCore\App\Block;
 use Droplister\XcpCore\App\Rollback;
 use Droplister\XcpCore\App\Jobs\UpdateBalances;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -65,20 +66,30 @@ class HandleRollback implements ShouldQueue
         // Record the rollback
         $rollback = $this->createRollback();
 
+        Log::info('Rollback #'. $rollback->id);
+
         // Rollback activated
         if($rollback->wasRecentlyCreated)
         {
             // Clear jobs in the queue
-            Redis::connection()->del('queues:default');
+            Redis::command('flushdb');
+
+            Log::info('Queue Cleared');
 
             // UpdateBalances requires Block instance
             $block = Block::find($this->bindings['block_index']);
 
+            Log::info('Block #' . $block->block_index);
+
             // Rollback balance first
             UpdateBalances::dispatchNow($block, true);
 
+            Log::info('Balances Update');
+
             // Rollback to block index
             $this->rollbackDatabase($rollback);
+
+            Log::info('Database Fixed');
         }
     }
 
@@ -146,6 +157,8 @@ class HandleRollback implements ShouldQueue
             'credits',
             'debits',
             'destructions',
+            'dispensers',
+            'dispenses',
             'dividends',
             'issuances',
             'order_expirations',
@@ -158,6 +171,7 @@ class HandleRollback implements ShouldQueue
             'rps_match_expirations',
             'rpsresolves',
             'sends',
+            'sweeps',
         ];
     }
 }
